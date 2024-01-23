@@ -11,6 +11,7 @@ import SwiftUI
 struct NiuNiuSayApp: App {
     var body: some Scene {
         WindowGroup {
+            // Use ViewControllerWrapper to embed the ViewController directly
             ContentView()
         }
     }

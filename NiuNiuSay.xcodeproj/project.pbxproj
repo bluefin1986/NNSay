@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */; };
 		75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */; };
 		75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1D9A2B5E68E200F629C6 /* ContentView.swift */; };
 		75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC1D9C2B5E68E300F629C6 /* Assets.xcassets */; };
@@ -14,6 +15,11 @@
 		75BC1DAA2B5E68E300F629C6 /* NiuNiuSayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DA92B5E68E300F629C6 /* NiuNiuSayTests.swift */; };
 		75BC1DB42B5E68E300F629C6 /* NiuNiuSayUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DB32B5E68E300F629C6 /* NiuNiuSayUITests.swift */; };
 		75BC1DB62B5E68E300F629C6 /* NiuNiuSayUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DB52B5E68E300F629C6 /* NiuNiuSayUITestsLaunchTests.swift */; };
+		75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DC42B5E787E00F629C6 /* RecorderController.swift */; };
+		75BC1DC72B5E793500F629C6 /* RecorderDeligate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DC62B5E793500F629C6 /* RecorderDeligate.swift */; };
+		75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DC82B5E97AE00F629C6 /* Buttons.swift */; };
+		75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCA2B5E981300F629C6 /* PlayerController.swift */; };
+		75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognition.swift; sourceTree = "<group>"; };
 		75BC1D952B5E68E200F629C6 /* NiuNiuSay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NiuNiuSay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiuNiuSayApp.swift; sourceTree = "<group>"; };
 		75BC1D9A2B5E68E200F629C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,6 +51,12 @@
 		75BC1DAF2B5E68E300F629C6 /* NiuNiuSayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NiuNiuSayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC1DB32B5E68E300F629C6 /* NiuNiuSayUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiuNiuSayUITests.swift; sourceTree = "<group>"; };
 		75BC1DB52B5E68E300F629C6 /* NiuNiuSayUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiuNiuSayUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		75BC1DC42B5E787E00F629C6 /* RecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderController.swift; sourceTree = "<group>"; };
+		75BC1DC62B5E793500F629C6 /* RecorderDeligate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderDeligate.swift; sourceTree = "<group>"; };
+		75BC1DC82B5E97AE00F629C6 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		75BC1DCA2B5E981300F629C6 /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
+		75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalParams.swift; sourceTree = "<group>"; };
+		75BC1DD02B5EAE3300F629C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,10 +107,17 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				75BC1DD02B5EAE3300F629C6 /* Info.plist */,
 				75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */,
 				75BC1D9A2B5E68E200F629C6 /* ContentView.swift */,
 				75BC1D9C2B5E68E300F629C6 /* Assets.xcassets */,
 				75BC1D9E2B5E68E300F629C6 /* Preview Content */,
+				75BC1DC42B5E787E00F629C6 /* RecorderController.swift */,
+				75BC1DC62B5E793500F629C6 /* RecorderDeligate.swift */,
+				75BC1DC82B5E97AE00F629C6 /* Buttons.swift */,
+				75BC1DCA2B5E981300F629C6 /* PlayerController.swift */,
+				75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */,
+				75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */,
 			);
 			path = NiuNiuSay;
 			sourceTree = "<group>";
@@ -257,7 +277,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
+				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
+				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
+				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,
+				75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */,
 				75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */,
+				75BC1DC72B5E793500F629C6 /* RecorderDeligate.swift in Sources */,
 				75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -422,8 +448,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NiuNiuSay/Preview Content\"";
+				DEVELOPMENT_TEAM = XP242N85BR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NiuNiuSay/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "妞妞说";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "我们需要访问您的麦克风，以便进行语音录音用于学习英语。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "让我来帮你识别语音输入的内容";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -434,7 +466,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.NiuNiuSay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.nnsay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -450,8 +482,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"NiuNiuSay/Preview Content\"";
+				DEVELOPMENT_TEAM = XP242N85BR;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = NiuNiuSay/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "妞妞说";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "我们需要访问您的麦克风，以便进行语音录音用于学习英语。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "让我来帮你识别语音输入的内容";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -462,7 +500,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.NiuNiuSay;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.nnsay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
