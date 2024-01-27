@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7588D0372B655EBB00E0B966 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7588D0362B655EBB00E0B966 /* GameController.swift */; };
+		7588D03A2B6563E300E0B966 /* success.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7588D0392B6563E300E0B966 /* success.mp3 */; };
+		7588D03C2B65652A00E0B966 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7588D03B2B65652A00E0B966 /* fail.mp3 */; };
 		75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */; };
 		75ADB1F92B60B0C7001CFA08 /* SampleSpeakController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */; };
 		75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */; };
@@ -41,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7588D0362B655EBB00E0B966 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		7588D0392B6563E300E0B966 /* success.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = success.mp3; sourceTree = "<group>"; };
+		7588D03B2B65652A00E0B966 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fail.mp3; sourceTree = "<group>"; };
 		75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognition.swift; sourceTree = "<group>"; };
 		75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSpeakController.swift; sourceTree = "<group>"; };
 		75BC1D952B5E68E200F629C6 /* NiuNiuSay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NiuNiuSay.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -86,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7588D0382B6563BC00E0B966 /* sound */ = {
+			isa = PBXGroup;
+			children = (
+				7588D03B2B65652A00E0B966 /* fail.mp3 */,
+				7588D0392B6563E300E0B966 /* success.mp3 */,
+			);
+			path = sound;
+			sourceTree = "<group>";
+		};
 		75BC1D8C2B5E68E200F629C6 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +124,7 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				7588D0382B6563BC00E0B966 /* sound */,
 				75BC1DD02B5EAE3300F629C6 /* Info.plist */,
 				75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */,
 				75BC1D9A2B5E68E200F629C6 /* ContentView.swift */,
@@ -121,6 +137,7 @@
 				75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */,
 				75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */,
 				75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */,
+				7588D0362B655EBB00E0B966 /* GameController.swift */,
 			);
 			path = NiuNiuSay;
 			sourceTree = "<group>";
@@ -255,6 +272,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC1DA02B5E68E300F629C6 /* Preview Assets.xcassets in Resources */,
+				7588D03A2B6563E300E0B966 /* success.mp3 in Resources */,
+				7588D03C2B65652A00E0B966 /* fail.mp3 in Resources */,
 				75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -281,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
+				7588D0372B655EBB00E0B966 /* GameController.swift in Sources */,
 				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
 				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
 				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,

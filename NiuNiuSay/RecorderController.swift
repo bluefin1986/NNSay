@@ -96,11 +96,11 @@ class RecorderController: ObservableObject {
             //开始识别转换文本
             speechRecognition.recognizeSpeech(from: audioFilename) { [weak self] result in
                 guard let self = self else { return }
-
                 switch result {
                 case .success(let recognizedText):
                     self.recognizedText = recognizedText
                     print("Recognition success: \(recognizedText)")
+                    onRecognitionComplete?(recognizedText)
                 case .failure(let error):
                     print("Recognition failure: \(error)")
                 }
@@ -109,5 +109,5 @@ class RecorderController: ObservableObject {
         print("recording stopped...\(audioFilename)")
     }
     
-    
+    var onRecognitionComplete: ((String) -> Void)? 
 }

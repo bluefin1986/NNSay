@@ -10,7 +10,7 @@ import Speech
 
 class SpeechRecognitionViewModel: ObservableObject {
     @Published var transcription: String = ""
-    
+    @Published var isRecognitionComplete: Bool = false
     // 标识当前的语音识别区域，默认为中文
     @Published var currentLocaleIdentifier: String = LOCALE_ENGLISH
 
@@ -20,6 +20,7 @@ class SpeechRecognitionViewModel: ObservableObject {
     }
 
     func recognizeSpeech(from audioURL: URL, completion: @escaping (RecognitionResult) -> Void) {
+        isRecognitionComplete = false
         let recognizer = SFSpeechRecognizer(locale: Locale(identifier: currentLocaleIdentifier))
 
         guard let recognizer = recognizer else {
@@ -31,20 +32,20 @@ class SpeechRecognitionViewModel: ObservableObject {
         let request = SFSpeechURLRecognitionRequest(url: audioURL)
 
         recognizer.recognitionTask(with: request) { [weak self] (result, error) in
-            if let result = result {
-                // 获取最佳的识别结果
-                let transcription = result.bestTranscription.formattedString
-
-                print("Transcription: \(transcription)")
-                // 更新视图模型的属性
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if let result = result {
+                    if !result.isFinal{
+                        return
+                    }
+                    let transcription = result.bestTranscription.formattedString
                     self?.transcription = transcription
+                    self?.isRecognitionComplete = true
                     completion(.success(transcription))
+                } else if let error = error {
+                    print("Error: \(error)")
+                    self?.isRecognitionComplete = true
+                    completion(.failure(error))
                 }
-            } else if let error = error {
-                // 处理语音识别错误
-                print("Error: \(error)")
-                completion(.failure(error))
             }
         }
     }
