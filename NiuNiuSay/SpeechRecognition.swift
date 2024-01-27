@@ -11,12 +11,8 @@ import Speech
 class SpeechRecognitionViewModel: ObservableObject {
     @Published var transcription: String = ""
     
-    // 常量定义
-    static let LOCALE_CHINESE = "zh-CN"
-    static let LOCALE_ENGLISH = "en-US"
-    
     // 标识当前的语音识别区域，默认为中文
-    @Published var currentLocaleIdentifier: String = LOCALE_CHINESE
+    @Published var currentLocaleIdentifier: String = LOCALE_ENGLISH
 
     enum RecognitionResult {
         case success(String)
@@ -55,8 +51,8 @@ class SpeechRecognitionViewModel: ObservableObject {
     
     // 切换语音识别区域
     func changeLocale(to: String) {
-        if to != SpeechRecognitionViewModel.LOCALE_CHINESE
-            || to != SpeechRecognitionViewModel.LOCALE_ENGLISH {
+        if to != LOCALE_CHINESE
+            && to != LOCALE_ENGLISH {
             print("not supported locale: \(to)")
             return
         }

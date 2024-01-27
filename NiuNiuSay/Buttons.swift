@@ -16,6 +16,9 @@ public extension UIColor {
                   green: CGFloat((hex & 0x00FF00) >> 8) / 255,
                   blue: CGFloat(hex & 0x0000FF) / 255, alpha: 1)
     }
+    var toColor: Color {
+        return Color(self)
+    }
 }
 
 struct RecordButton: View {
@@ -92,5 +95,33 @@ struct PlayButton: View {
                 .foregroundColor(isPlaying ? .red : .green)
         }
         .padding()
+    }
+}
+
+
+struct PlaySampleButton: View {
+    @ObservedObject var sampleSpeekController: SampleSpeakController
+    @Binding var isPlaying: Bool
+    @Binding var sampleSentence: String
+    
+    var body: some View {
+        Button(action: {
+            // 点击按钮后调用 generateSpeech 方法
+            sampleSpeekController.generateSpeech(text: sampleSentence)
+        }) {
+            // 使用 SF Symbols 中的喇叭图标
+            Image(systemName: "speaker.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 50, height: 50)
+                .foregroundColor(UIColor.init(colorHex: 0xE75480).toColor) // 玫红色
+                .opacity(isPlaying ? 0.7 : 1.0)
+        }
+        .padding()
+        .disabled(isPlaying)
+        .onAppear {
+            // 用于重置按钮状态
+            isPlaying = false
+        }
     }
 }
