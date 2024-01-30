@@ -12,6 +12,9 @@
 		7588D03C2B65652A00E0B966 /* fail.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7588D03B2B65652A00E0B966 /* fail.mp3 */; };
 		75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */; };
 		75ADB1F92B60B0C7001CFA08 /* SampleSpeakController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */; };
+		75BB2DA02B68FF4E00BAD1A6 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BB2D9F2B68FF4E00BAD1A6 /* SideMenuView.swift */; };
+		75BB2DA32B69156100BAD1A6 /* ProcessIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BB2DA22B69156100BAD1A6 /* ProcessIndicator.swift */; };
+		75BB2DA52B6916BF00BAD1A6 /* ReadAloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BB2DA42B6916BF00BAD1A6 /* ReadAloudView.swift */; };
 		75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */; };
 		75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1D9A2B5E68E200F629C6 /* ContentView.swift */; };
 		75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75BC1D9C2B5E68E300F629C6 /* Assets.xcassets */; };
@@ -24,6 +27,7 @@
 		75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DC82B5E97AE00F629C6 /* Buttons.swift */; };
 		75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCA2B5E981300F629C6 /* PlayerController.swift */; };
 		75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */; };
+		75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492842B6920B500DA76C0 /* MenuItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,9 @@
 		7588D03B2B65652A00E0B966 /* fail.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fail.mp3; sourceTree = "<group>"; };
 		75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechRecognition.swift; sourceTree = "<group>"; };
 		75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleSpeakController.swift; sourceTree = "<group>"; };
+		75BB2D9F2B68FF4E00BAD1A6 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		75BB2DA22B69156100BAD1A6 /* ProcessIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessIndicator.swift; sourceTree = "<group>"; };
+		75BB2DA42B6916BF00BAD1A6 /* ReadAloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAloudView.swift; sourceTree = "<group>"; };
 		75BC1D952B5E68E200F629C6 /* NiuNiuSay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NiuNiuSay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NiuNiuSayApp.swift; sourceTree = "<group>"; };
 		75BC1D9A2B5E68E200F629C6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,6 +72,7 @@
 		75BC1DCA2B5E981300F629C6 /* PlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerController.swift; sourceTree = "<group>"; };
 		75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalParams.swift; sourceTree = "<group>"; };
 		75BC1DD02B5EAE3300F629C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		75C492842B6920B500DA76C0 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,25 @@
 			path = sound;
 			sourceTree = "<group>";
 		};
+		75BB2D9E2B68FF0400BAD1A6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				75BB2D9F2B68FF4E00BAD1A6 /* SideMenuView.swift */,
+				75BB2DA42B6916BF00BAD1A6 /* ReadAloudView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		75BB2DA12B69152200BAD1A6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				75BC1DC82B5E97AE00F629C6 /* Buttons.swift */,
+				75BB2DA22B69156100BAD1A6 /* ProcessIndicator.swift */,
+				75C492842B6920B500DA76C0 /* MenuItem.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		75BC1D8C2B5E68E200F629C6 = {
 			isa = PBXGroup;
 			children = (
@@ -124,6 +151,8 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				75BB2DA12B69152200BAD1A6 /* Components */,
+				75BB2D9E2B68FF0400BAD1A6 /* View */,
 				7588D0382B6563BC00E0B966 /* sound */,
 				75BC1DD02B5EAE3300F629C6 /* Info.plist */,
 				75BC1D982B5E68E200F629C6 /* NiuNiuSayApp.swift */,
@@ -132,7 +161,6 @@
 				75BC1D9E2B5E68E300F629C6 /* Preview Content */,
 				75BC1DC42B5E787E00F629C6 /* RecorderController.swift */,
 				75BC1DC62B5E793500F629C6 /* RecorderDeligate.swift */,
-				75BC1DC82B5E97AE00F629C6 /* Buttons.swift */,
 				75BC1DCA2B5E981300F629C6 /* PlayerController.swift */,
 				75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */,
 				75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */,
@@ -302,7 +330,11 @@
 				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
 				7588D0372B655EBB00E0B966 /* GameController.swift in Sources */,
 				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
+				75BB2DA52B6916BF00BAD1A6 /* ReadAloudView.swift in Sources */,
 				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
+				75BB2DA02B68FF4E00BAD1A6 /* SideMenuView.swift in Sources */,
+				75BB2DA32B69156100BAD1A6 /* ProcessIndicator.swift in Sources */,
+				75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */,
 				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,
 				75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */,
 				75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */,

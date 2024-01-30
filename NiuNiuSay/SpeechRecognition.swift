@@ -11,8 +11,6 @@ import Speech
 class SpeechRecognitionViewModel: ObservableObject {
     @Published var transcription: String = ""
     @Published var isRecognitionComplete: Bool = false
-    // 标识当前的语音识别区域，默认为中文
-    @Published var currentLocaleIdentifier: String = LOCALE_ENGLISH
 
     enum RecognitionResult {
         case success(String)
@@ -21,7 +19,7 @@ class SpeechRecognitionViewModel: ObservableObject {
 
     func recognizeSpeech(from audioURL: URL, completion: @escaping (RecognitionResult) -> Void) {
         isRecognitionComplete = false
-        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: currentLocaleIdentifier))
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
 
         guard let recognizer = recognizer else {
             print("Speech recognition is not supported on this device.")
@@ -50,13 +48,4 @@ class SpeechRecognitionViewModel: ObservableObject {
         }
     }
     
-    // 切换语音识别区域
-    func changeLocale(to: String) {
-        if to != LOCALE_CHINESE
-            && to != LOCALE_ENGLISH {
-            print("not supported locale: \(to)")
-            return
-        }
-        currentLocaleIdentifier = to
-    }
 }
