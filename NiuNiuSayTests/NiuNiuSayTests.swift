@@ -21,10 +21,7 @@ final class NiuNiuSayTests: XCTestCase {
     func testExample() throws {
         let practiceController = SampleSpeakController()
         print("dddd")
-        practiceController.generateSpeech(text: "这是一棵树", filename: sampleAudioFilename,
-                                          locale: LOCALE_CHINESE) {
-            print("生成成功")
-        }
+        practiceController.generateSpeech(text: "这是一棵树") 
     }
 
     func testPerformanceExample() throws {

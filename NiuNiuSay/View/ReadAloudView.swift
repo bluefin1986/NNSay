@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import SpriteKit
 
 struct ReadAloudView: View {
     @State private var sentences: [String] = []
@@ -24,6 +25,12 @@ struct ReadAloudView: View {
     
     var body: some View{
         VStack(spacing: 20) {
+            //GameView
+            GeometryReader { geometry in
+                SpriteView(scene: MainGameScene(size: CGSize(width: geometry.size.width, height: geometry.size.height)))
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .edgesIgnoringSafeArea(.all)
+            }
             HStack {
                 Spacer()
                 VStack{

@@ -11,14 +11,25 @@ import UIKit
 
 struct AttributedText: UIViewRepresentable {
     var attributedString: NSAttributedString
-    var font: UIFont
+    var font: UIFont?
     var color: UIColor?
+    var fixedWidth: CGFloat? // 可选的固定宽度
+    
 
     func makeUIView(context: Context) -> UILabel {
         let label = UILabel()
         label.numberOfLines = 0  // 支持多行
-        label.font = font
+        label.font = font ?? UIFont.systemFont(ofSize: 18)
         label.textColor = color ?? label.textColor
+        label.lineBreakMode = .byWordWrapping // 单词换行
+        label.attributedText = attributedString
+        label.translatesAutoresizingMaskIntoConstraints = false // 允许自动布局
+        // 只有在提供了 fixedWidth 时才设置宽度约束
+        if let width = fixedWidth {
+            NSLayoutConstraint.activate([
+                label.widthAnchor.constraint(equalToConstant: width)
+            ])
+        }
         return label
     }
 

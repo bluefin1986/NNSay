@@ -28,6 +28,16 @@
 		75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCA2B5E981300F629C6 /* PlayerController.swift */; };
 		75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */; };
 		75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492842B6920B500DA76C0 /* MenuItem.swift */; };
+		75C492882B695A2800DA76C0 /* MainGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 75C492872B695A2800DA76C0 /* MainGameScene.sks */; };
+		75C4928B2B695A7700DA76C0 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75C4928A2B695A7700DA76C0 /* SpriteKit.framework */; };
+		75C4928F2B695E3F00DA76C0 /* MainGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4928E2B695E3F00DA76C0 /* MainGameScene.swift */; };
+		75C492962B6A2B5000DA76C0 /* pea-shooter.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492952B6A2B5000DA76C0 /* pea-shooter.gif */; };
+		75C492982B6A2D6F00DA76C0 /* Zombie.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492972B6A2D6F00DA76C0 /* Zombie.gif */; };
+		75C4929A2B6A2FD200DA76C0 /* ZombieAttack.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492992B6A2FD100DA76C0 /* ZombieAttack.gif */; };
+		75C4929E2B6A345E00DA76C0 /* ReadAloudIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C4929D2B6A345E00DA76C0 /* ReadAloudIntroView.swift */; };
+		75C492A12B6A76E800DA76C0 /* GongFanWanShiHei-2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */; };
+		75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */; };
+		75C492A62B6A8E1600DA76C0 /* DialogTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492A42B6A8C4D00DA76C0 /* DialogTestScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +83,16 @@
 		75BC1DCC2B5E99CA00F629C6 /* GlobalParams.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalParams.swift; sourceTree = "<group>"; };
 		75BC1DD02B5EAE3300F629C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		75C492842B6920B500DA76C0 /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		75C492872B695A2800DA76C0 /* MainGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MainGameScene.sks; sourceTree = "<group>"; };
+		75C4928A2B695A7700DA76C0 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		75C4928E2B695E3F00DA76C0 /* MainGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGameScene.swift; sourceTree = "<group>"; };
+		75C492952B6A2B5000DA76C0 /* pea-shooter.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "pea-shooter.gif"; sourceTree = "<group>"; };
+		75C492972B6A2D6F00DA76C0 /* Zombie.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Zombie.gif; sourceTree = "<group>"; };
+		75C492992B6A2FD100DA76C0 /* ZombieAttack.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ZombieAttack.gif; sourceTree = "<group>"; };
+		75C4929D2B6A345E00DA76C0 /* ReadAloudIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadAloudIntroView.swift; sourceTree = "<group>"; };
+		75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GongFanWanShiHei-2.ttf"; sourceTree = "<group>"; };
+		75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PvZDialogNode.swift; sourceTree = "<group>"; };
+		75C492A42B6A8C4D00DA76C0 /* DialogTestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTestScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C4928B2B695A7700DA76C0 /* SpriteKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +135,7 @@
 			children = (
 				75BB2D9F2B68FF4E00BAD1A6 /* SideMenuView.swift */,
 				75BB2DA42B6916BF00BAD1A6 /* ReadAloudView.swift */,
+				75C4929D2B6A345E00DA76C0 /* ReadAloudIntroView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -124,6 +146,7 @@
 				75BC1DC82B5E97AE00F629C6 /* Buttons.swift */,
 				75BB2DA22B69156100BAD1A6 /* ProcessIndicator.swift */,
 				75C492842B6920B500DA76C0 /* MenuItem.swift */,
+				75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -135,6 +158,7 @@
 				75BC1DA82B5E68E300F629C6 /* NiuNiuSayTests */,
 				75BC1DB22B5E68E300F629C6 /* NiuNiuSayUITests */,
 				75BC1D962B5E68E200F629C6 /* Products */,
+				75C492892B695A7700DA76C0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +175,9 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				75C4929F2B6A51EE00DA76C0 /* Fonts */,
+				75C492902B6A1D4400DA76C0 /* GifPictures */,
+				75C492862B69597A00DA76C0 /* Scenes */,
 				75BB2DA12B69152200BAD1A6 /* Components */,
 				75BB2D9E2B68FF0400BAD1A6 /* View */,
 				7588D0382B6563BC00E0B966 /* sound */,
@@ -166,6 +193,7 @@
 				75ADB1F62B5FEA9F001CFA08 /* SpeechRecognition.swift */,
 				75ADB1F82B60B0C7001CFA08 /* SampleSpeakController.swift */,
 				7588D0362B655EBB00E0B966 /* GameController.swift */,
+				75C492A42B6A8C4D00DA76C0 /* DialogTestScene.swift */,
 			);
 			path = NiuNiuSay;
 			sourceTree = "<group>";
@@ -193,6 +221,41 @@
 				75BC1DB52B5E68E300F629C6 /* NiuNiuSayUITestsLaunchTests.swift */,
 			);
 			path = NiuNiuSayUITests;
+			sourceTree = "<group>";
+		};
+		75C492862B69597A00DA76C0 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				75C492872B695A2800DA76C0 /* MainGameScene.sks */,
+				75C4928E2B695E3F00DA76C0 /* MainGameScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		75C492892B695A7700DA76C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				75C4928A2B695A7700DA76C0 /* SpriteKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		75C492902B6A1D4400DA76C0 /* GifPictures */ = {
+			isa = PBXGroup;
+			children = (
+				75C492972B6A2D6F00DA76C0 /* Zombie.gif */,
+				75C492992B6A2FD100DA76C0 /* ZombieAttack.gif */,
+				75C492952B6A2B5000DA76C0 /* pea-shooter.gif */,
+			);
+			path = GifPictures;
+			sourceTree = "<group>";
+		};
+		75C4929F2B6A51EE00DA76C0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,9 +362,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C492A12B6A76E800DA76C0 /* GongFanWanShiHei-2.ttf in Resources */,
 				75BC1DA02B5E68E300F629C6 /* Preview Assets.xcassets in Resources */,
 				7588D03A2B6563E300E0B966 /* success.mp3 in Resources */,
+				75C4929A2B6A2FD200DA76C0 /* ZombieAttack.gif in Resources */,
 				7588D03C2B65652A00E0B966 /* fail.mp3 in Resources */,
+				75C492962B6A2B5000DA76C0 /* pea-shooter.gif in Resources */,
+				75C492882B695A2800DA76C0 /* MainGameScene.sks in Resources */,
+				75C492982B6A2D6F00DA76C0 /* Zombie.gif in Resources */,
 				75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -327,19 +395,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C4928F2B695E3F00DA76C0 /* MainGameScene.swift in Sources */,
 				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
 				7588D0372B655EBB00E0B966 /* GameController.swift in Sources */,
 				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
 				75BB2DA52B6916BF00BAD1A6 /* ReadAloudView.swift in Sources */,
 				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
 				75BB2DA02B68FF4E00BAD1A6 /* SideMenuView.swift in Sources */,
+				75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */,
 				75BB2DA32B69156100BAD1A6 /* ProcessIndicator.swift in Sources */,
 				75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */,
 				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,
 				75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */,
+				75C4929E2B6A345E00DA76C0 /* ReadAloudIntroView.swift in Sources */,
 				75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */,
 				75BC1DC72B5E793500F629C6 /* RecorderDeligate.swift in Sources */,
 				75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */,
+				75C492A62B6A8E1600DA76C0 /* DialogTestScene.swift in Sources */,
 				75ADB1F92B60B0C7001CFA08 /* SampleSpeakController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

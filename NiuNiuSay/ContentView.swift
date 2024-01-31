@@ -7,8 +7,8 @@
 
 import SwiftUI
 import UIKit
+import SpriteKit
 import AVFoundation
-
 
 
 struct ContentView: View {
@@ -32,12 +32,19 @@ struct ContentView: View {
                         .frame(alignment: .trailing)
                         .padding(.trailing, 10)
                 }
-                .frame(maxWidth: .infinity, maxHeight: 100, alignment: .top)
+                .frame(height: 50) // 减少顶部栏的高度
                 
-                Spacer()
                 
                 // Bottom part with sentence display and buttons
-                ReadAloudView()
+                ReadAloudIntroView()
+                
+                //TestView
+//                GeometryReader { geometry in
+//                    SpriteView(scene: DialogTestScene(size: CGSize(width: geometry.size.width, height: geometry.size.height)))
+//                        .frame(width: geometry.size.width, height: geometry.size.height)
+//                        .edgesIgnoringSafeArea(.all)
+//                }
+                Spacer()
             }
         }
     }
