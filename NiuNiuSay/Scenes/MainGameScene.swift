@@ -31,14 +31,40 @@ func textures(fromGifNamed name: String) -> [SKTexture]? {
     return textures
 }
 
-class MainGameScene: SKScene {
-    let peashooter = SKSpriteNode()
-    let zombie = SKSpriteNode()
+class MainGameScene: SKScene, SKPhysicsContactDelegate {
+    private var peashooter: Peashooter?
+    private var zombie: Zombie?
     let background = SKSpriteNode(imageNamed: "background")
-    var hasSetup = false
-
+    
+    private var firstRun = true
+    
+    override init(size: CGSize){
+        super.init(size: size)
+        setupBackground()
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func didMove(to view: SKView) {
-        restartGame()
+        self.physicsWorld.contactDelegate = self
+        self.runBackgroundZoomAnimation(){
+            // 调试用，显示物理边框的
+            view.showsPhysics = false
+            
+            self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
+            let ground = SKSpriteNode(color: .clear, size: CGSize(width: self.size.width + 300, height: 2))
+            ground.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2 - 100)
+            ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
+            ground.physicsBody?.isDynamic = false // 使其不受重力影响
+            self.addChild(ground)
+            self.setupPeashooter()
+            self.setupZombie()
+            self.restartGame()
+            self.firstRun = false
+        }
     }
     
     func setupBackground() {
@@ -50,22 +76,14 @@ class MainGameScene: SKScene {
     }
 
     func setupPeashooter() {
-        if let peashooterFrames = textures(fromGifNamed: "pea-shooter"), !peashooterFrames.isEmpty {
-            peashooter.texture = peashooterFrames[0]
-            peashooter.position = CGPoint(x: 280, y: size.height + 100) // Start off-screen
-            peashooter.size = CGSize(width: 100, height: 100)
-            peashooter.run(SKAction.repeatForever(SKAction.animate(with: peashooterFrames, timePerFrame: 0.1)))
-            addChild(peashooter)
-        }
+        peashooter = Peashooter(scene: self)
+        addChild(peashooter!)
     }
 
     func setupZombie() {
-        zombie.position = CGPoint(x: size.width + 100, y: size.height / 2) // Start off-screen
-        if let zombieWalkFrames = textures(fromGifNamed: "Zombie"), !zombieWalkFrames.isEmpty {
-            zombie.texture = zombieWalkFrames[0]
-            zombie.size = zombieWalkFrames[0].size()
-            addChild(zombie)
-        }
+        zombie = Zombie(scene: self)
+        zombie?.onExit = showGameOver
+        addChild(zombie!)
     }
 
     func runBackgroundZoomAnimation(completion: @escaping () -> Void) {
@@ -75,57 +93,12 @@ class MainGameScene: SKScene {
         }
     }
 
-    func runPeashooterDropAnimation(completion: @escaping () -> Void) {
-        let dropAction = SKAction.moveTo(y: size.height / 2, duration: 1.0)
-        peashooter.run(dropAction) {
-            completion()
-        }
-    }
+    
 
     func runPeashooterSmokeEffect() {
         // 创建烟雾效果
 //         let smokeEffect = SKEmitterNode(fileNamed: "SmokeEffect")
 //         peashooter.addChild(smokeEffect)
-    }
-
-    func runZombieWalkAnimation() {
-        guard let zombieWalkFrames = textures(fromGifNamed: "Zombie"),
-              !zombieWalkFrames.isEmpty,
-              let zombieAttackFrames = textures(fromGifNamed: "ZombieAttack"),
-              !zombieAttackFrames.isEmpty else {
-            print("无法加载僵尸动画帧")
-            return
-        }
-        let walkAnimation = SKAction.animate(with: zombieWalkFrames, timePerFrame: 0.1)
-        zombie.run(SKAction.repeatForever(walkAnimation))
-
-        let distanceToPeashooter = zombie.position.x - peashooter.position.x - 10
-        let moveAction = SKAction.moveBy(x: -distanceToPeashooter, y: 0, duration: Double(distanceToPeashooter) / 60.0)
-        let switchToAttackAnimation = SKAction.run {
-            let attackAnimation = SKAction.animate(with: zombieAttackFrames, timePerFrame: 0.1)
-            self.zombie.run(SKAction.repeatForever(attackAnimation))
-        }
-        let sequence = SKAction.sequence([
-            moveAction,
-            switchToAttackAnimation,
-            SKAction.wait(forDuration: 5.0), // 僵尸攻击豌豆射手持续 5 秒
-            SKAction.run {
-                self.peashooter.removeFromParent() // 移除豌豆射手
-                self.runZombieExitAnimation() // 让僵尸继续走动
-            }
-        ])
-        zombie.run(sequence)
-    }
-    
-    func runZombieExitAnimation() {
-        let exitAction = SKAction.moveTo(x: -zombie.size.width, duration: 5.0) // 调整持续时间以控制僵尸离开屏幕的速度
-        let endSequence = SKAction.sequence([
-            exitAction,
-            SKAction.run {
-                self.showGameOver() // 显示游戏结束画面
-            }
-        ])
-        zombie.run(endSequence)
     }
     
     func showGameOver() {
@@ -156,36 +129,45 @@ class MainGameScene: SKScene {
         }
     }
     
-    func reset(){
-        // 关闭对话框（如果已经添加到场景中）
-        if let dialog = childNode(withName: "pvzDialog") as? PvZDialogNode {
-            dialog.removeFromParent()
+    func didBegin(_ contact: SKPhysicsContact) {
+        let firstNode = contact.bodyA.node as? GameCharacter
+        let secondNode = contact.bodyB.node as? GameCharacter
+        if firstNode == nil || secondNode == nil {
+            return
         }
-        // 重置地图缩放
-        background.xScale = 1.0
-        background.yScale = 1.0
-
-        setupPeashooter()
-
-        // 重置僵尸位置
-        zombie.position = CGPoint(x: size.width + 100, y: size.height / 2) // Start off-screen
+        if let zombie = firstNode as? Zombie {
+            zombie.didCollide(with: secondNode!)
+        } else if let peashooter = firstNode as? Peashooter {
+            peashooter.didCollide(with: secondNode!)
+        }
+        
+        if let zombie = secondNode as? Zombie {
+            zombie.didCollide(with: firstNode!)
+        } else if let peashooter = secondNode as? Peashooter {
+            peashooter.didCollide(with: firstNode!)
+        }
     }
     
     func restartGame(){
-        if !hasSetup {
-            setupBackground()
-            setupPeashooter()
-            setupZombie()
-            hasSetup = true
-        } else {
-            reset()
-        }
-        
-        runBackgroundZoomAnimation {
-            self.runPeashooterDropAnimation {
-                self.runPeashooterSmokeEffect()
-                self.runZombieWalkAnimation()
+        if !firstRun {
+            // 关闭对话框（如果已经添加到场景中）
+            if let dialog = childNode(withName: "pvzDialog") as? PvZDialogNode {
+                dialog.removeFromParent()
             }
+            // 重置地图缩放
+            background.xScale = 1.0
+            background.yScale = 1.0
+            runBackgroundZoomAnimation {
+                self.setupPeashooter()
+                self.setupZombie()
+                self.zombie!.runZombieWalkAnimation(walkSteps: 50)
+            }
+        } else {
+            self.zombie!.runZombieWalkAnimation(walkSteps: 50)
         }
+    }
+    
+    func peashooterRemoved(peashooter: Peashooter) {
+        
     }
 }

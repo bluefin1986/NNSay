@@ -38,6 +38,10 @@
 		75C492A12B6A76E800DA76C0 /* GongFanWanShiHei-2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */; };
 		75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */; };
 		75C492A62B6A8E1600DA76C0 /* DialogTestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492A42B6A8C4D00DA76C0 /* DialogTestScene.swift */; };
+		75C492B42B6BE87400DA76C0 /* PeaShooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492B32B6BE87400DA76C0 /* PeaShooter.swift */; };
+		75C492B62B6BE89500DA76C0 /* Zombie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492B52B6BE89500DA76C0 /* Zombie.swift */; };
+		75C492B82B6BE9DC00DA76C0 /* GameCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492B72B6BE9DC00DA76C0 /* GameCharacter.swift */; };
+		75C492BA2B6D4C4100DA76C0 /* ZombieBoomDie.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492B92B6D4C4100DA76C0 /* ZombieBoomDie.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +97,10 @@
 		75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GongFanWanShiHei-2.ttf"; sourceTree = "<group>"; };
 		75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PvZDialogNode.swift; sourceTree = "<group>"; };
 		75C492A42B6A8C4D00DA76C0 /* DialogTestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialogTestScene.swift; sourceTree = "<group>"; };
+		75C492B32B6BE87400DA76C0 /* PeaShooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeaShooter.swift; sourceTree = "<group>"; };
+		75C492B52B6BE89500DA76C0 /* Zombie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Zombie.swift; sourceTree = "<group>"; };
+		75C492B72B6BE9DC00DA76C0 /* GameCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCharacter.swift; sourceTree = "<group>"; };
+		75C492B92B6D4C4100DA76C0 /* ZombieBoomDie.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ZombieBoomDie.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +183,7 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				75C492B12B6BE82900DA76C0 /* GameNode */,
 				75C4929F2B6A51EE00DA76C0 /* Fonts */,
 				75C492902B6A1D4400DA76C0 /* GifPictures */,
 				75C492862B69597A00DA76C0 /* Scenes */,
@@ -243,6 +252,7 @@
 		75C492902B6A1D4400DA76C0 /* GifPictures */ = {
 			isa = PBXGroup;
 			children = (
+				75C492B92B6D4C4100DA76C0 /* ZombieBoomDie.gif */,
 				75C492972B6A2D6F00DA76C0 /* Zombie.gif */,
 				75C492992B6A2FD100DA76C0 /* ZombieAttack.gif */,
 				75C492952B6A2B5000DA76C0 /* pea-shooter.gif */,
@@ -256,6 +266,24 @@
 				75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		75C492B12B6BE82900DA76C0 /* GameNode */ = {
+			isa = PBXGroup;
+			children = (
+				75C492B22B6BE83800DA76C0 /* PvZ */,
+			);
+			path = GameNode;
+			sourceTree = "<group>";
+		};
+		75C492B22B6BE83800DA76C0 /* PvZ */ = {
+			isa = PBXGroup;
+			children = (
+				75C492B32B6BE87400DA76C0 /* PeaShooter.swift */,
+				75C492B52B6BE89500DA76C0 /* Zombie.swift */,
+				75C492B72B6BE9DC00DA76C0 /* GameCharacter.swift */,
+			);
+			path = PvZ;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C492BA2B6D4C4100DA76C0 /* ZombieBoomDie.gif in Resources */,
 				75C492A12B6A76E800DA76C0 /* GongFanWanShiHei-2.ttf in Resources */,
 				75BC1DA02B5E68E300F629C6 /* Preview Assets.xcassets in Resources */,
 				7588D03A2B6563E300E0B966 /* success.mp3 in Resources */,
@@ -396,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75C4928F2B695E3F00DA76C0 /* MainGameScene.swift in Sources */,
+				75C492B42B6BE87400DA76C0 /* PeaShooter.swift in Sources */,
 				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
 				7588D0372B655EBB00E0B966 /* GameController.swift in Sources */,
 				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
@@ -403,11 +433,13 @@
 				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
 				75BB2DA02B68FF4E00BAD1A6 /* SideMenuView.swift in Sources */,
 				75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */,
+				75C492B62B6BE89500DA76C0 /* Zombie.swift in Sources */,
 				75BB2DA32B69156100BAD1A6 /* ProcessIndicator.swift in Sources */,
 				75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */,
 				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,
 				75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */,
 				75C4929E2B6A345E00DA76C0 /* ReadAloudIntroView.swift in Sources */,
+				75C492B82B6BE9DC00DA76C0 /* GameCharacter.swift in Sources */,
 				75BC1D9B2B5E68E200F629C6 /* ContentView.swift in Sources */,
 				75BC1DC72B5E793500F629C6 /* RecorderDeligate.swift in Sources */,
 				75BC1D992B5E68E200F629C6 /* NiuNiuSayApp.swift in Sources */,
