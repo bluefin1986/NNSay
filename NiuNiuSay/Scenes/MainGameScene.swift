@@ -52,13 +52,16 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         self.runBackgroundZoomAnimation(){
             // 调试用，显示物理边框的
-            view.showsPhysics = false
+            view.showsPhysics = true
             
             self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
             let ground = SKSpriteNode(color: .clear, size: CGSize(width: self.size.width + 300, height: 2))
             ground.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2 - 100)
             ground.physicsBody = SKPhysicsBody(rectangleOf: ground.size)
             ground.physicsBody?.isDynamic = false // 使其不受重力影响
+            ground.physicsBody?.categoryBitMask = groundCategory
+            ground.physicsBody?.collisionBitMask = zombieCategory | bulletCategory
+            ground.name = "ground"
             self.addChild(ground)
             self.setupPeashooter()
             self.setupZombie()
@@ -77,7 +80,11 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
 
     func setupPeashooter() {
         peashooter = Peashooter(scene: self)
+        if peashooter == nil {
+            return
+        }
         addChild(peashooter!)
+        peashooter!.setupTimerForZombieDetection()
     }
 
     func setupZombie() {
@@ -130,21 +137,36 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        let firstNode = contact.bodyA.node as? GameCharacter
-        let secondNode = contact.bodyB.node as? GameCharacter
-        if firstNode == nil || secondNode == nil {
-            return
-        }
-        if let zombie = firstNode as? Zombie {
-            zombie.didCollide(with: secondNode!)
-        } else if let peashooter = firstNode as? Peashooter {
-            peashooter.didCollide(with: secondNode!)
-        }
-        
-        if let zombie = secondNode as? Zombie {
-            zombie.didCollide(with: firstNode!)
-        } else if let peashooter = secondNode as? Peashooter {
-            peashooter.didCollide(with: firstNode!)
+        let categoryBitMasks = (contact.bodyA.categoryBitMask, contact.bodyB.categoryBitMask)
+        print("Collision detected: \(contact.bodyA.categoryBitMask) with \(contact.bodyB.categoryBitMask)")
+            
+        switch categoryBitMasks {
+        case (zombieCategory, peashooterCategory),
+             (peashooterCategory, zombieCategory):
+            // 处理 zombie 和 shooter 的碰撞
+            if let zombie = contact.bodyA.node as? Zombie ?? contact.bodyB.node as? Zombie,
+               let shooter = contact.bodyA.node as? Peashooter ?? contact.bodyB.node as? Peashooter {
+                zombie.didCollide(with: shooter)
+            }
+        case (zombieCategory, bulletCategory),
+             (bulletCategory, zombieCategory):
+            // 处理 bullet 和 zombie 的碰撞
+            if let zombie = contact.bodyA.node as? Zombie ?? contact.bodyB.node as? Zombie,
+               let bullet = contact.bodyA.node as? FireBeanBullet ?? contact.bodyB.node as? FireBeanBullet {
+                zombie.didCollide(with: bullet)
+            }
+        case (groundCategory, peashooterCategory),
+             (peashooterCategory, groundCategory):
+            // 处理 peashooter 落地
+            if let peashooter = contact.bodyA.node as? GameNode ?? contact.bodyB.node as? GameNode {
+                let ground = contact.bodyA.node as? SKSpriteNode ?? contact.bodyB.node as? SKSpriteNode
+                if ground?.name == "ground" {
+                    peashooter.didCollide(withGround: ground!)
+                }
+            }
+        default:
+            // 处理其他类型的碰撞
+            break
         }
     }
     

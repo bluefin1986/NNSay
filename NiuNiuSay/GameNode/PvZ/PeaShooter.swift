@@ -12,6 +12,10 @@ import SpriteKit
 class Peashooter: GameCharacter {
     
     static let className = "Peashooter"
+    var detectionTimer: Timer?
+    var ammoCount: Int = 10 // 假设初始载弹量为10
+    // 已落地
+    var onGround = false
 
     init(scene: SKScene) {
         guard let peashooterFrames = textures(fromGifNamed: "pea-shooter"),
@@ -28,8 +32,8 @@ class Peashooter: GameCharacter {
 //        self.physicsBody?.isDynamic = false // 使其不受重力影响
 //        self.physicsBody?.linearDamping = 5.0
         self.physicsBody?.categoryBitMask = peashooterCategory
-        self.physicsBody?.collisionBitMask = zombieCategory
-        self.physicsBody?.contactTestBitMask = zombieCategory
+        self.physicsBody?.collisionBitMask = groundCategory | zombieCategory
+        self.physicsBody?.contactTestBitMask = groundCategory
         self.physicsBody?.restitution = 0
         self.run(SKAction.repeatForever(SKAction.animate(with: peashooterFrames, timePerFrame: 0.1)))
     }
@@ -38,7 +42,7 @@ class Peashooter: GameCharacter {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didCollide(with other: GameCharacter) {
+    override func didCollide(with other: GameNode) {
         if other.name == Zombie.className {
             // 启动计时器，5秒后执行消失逻辑
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -51,6 +55,37 @@ class Peashooter: GameCharacter {
         }
     }
     
+    override func didCollide(withGround ground: SKSpriteNode) {
+        onGround = true
+    }
+    
+    func checkForZombiesAndFire() {
+        guard let scene = self.scene else { return }
+        
+        scene.enumerateChildNodes(withName: Zombie.className) { node, _ in
+            let zombie = node as! Zombie
+            if self.ammoCount > 0 && self.onGround && zombie.currentState != .died{
+                self.fireBullet()
+            }
+        }
+    }
+    
+    func fireBullet() {
+        guard ammoCount > 0 else { return } // 确保有弹药
+        
+        ammoCount -= 1 // 发射子弹时减少弹药数量
+        // 创建子弹
+        let bullet = FireBeanBullet(scene: self.scene!, shooter: self)
+        self.scene?.addChild(bullet) // 将子弹添加到场景中
+        // 发射子弹
+        let moveAction = SKAction.moveBy(x: (self.scene?.size.width)! + bullet.size.width, y: 0, duration: 2) // 向前移动
+//        let removeAction = SKAction.removeFromParent() // 移动完成后移除子弹
+//        bullet.run(SKAction.sequence([moveAction, removeAction]))
+        bullet.run(moveAction)
+        
+    }
+    
+    
     override func onGameCharacterDie() {
         self.removeFromParent()
         attacker?.onDefeatedOther()
@@ -58,5 +93,21 @@ class Peashooter: GameCharacter {
     
     override func onDefeatedOther() {
         
+    }
+    
+    func setupTimerForZombieDetection() {
+        detectionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            self?.checkForZombiesAndFire()
+        }
+    }
+    
+    func invalidateTimer() {
+        detectionTimer?.invalidate()
+        detectionTimer = nil
+    }
+    
+    override func removeFromParent() {
+        super.removeFromParent()
+        invalidateTimer() // 当 Peashooter 被移除时停止定时器
     }
 }

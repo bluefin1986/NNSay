@@ -11,6 +11,7 @@ import SpriteKit
 enum ZombieState {
     case walking
     case attacking
+    case died
 }
 
 class Zombie: GameCharacter{
@@ -38,8 +39,8 @@ class Zombie: GameCharacter{
         self.physicsBody?.affectedByGravity = true
         self.physicsBody?.restitution = 0
         self.physicsBody?.categoryBitMask = zombieCategory
-        self.physicsBody?.collisionBitMask = peashooterCategory
-        self.physicsBody?.contactTestBitMask = peashooterCategory
+        self.physicsBody?.collisionBitMask = peashooterCategory | groundCategory | bulletCategory
+        self.physicsBody?.contactTestBitMask = peashooterCategory | bulletCategory
 //        self.physicsBody?.linearDamping = 5.0
     }
 
@@ -80,7 +81,7 @@ class Zombie: GameCharacter{
         runZombieWalkAnimation(walkSteps: 30.0) // 恢复行走动画
     }
     
-    override func didCollide(with other: GameCharacter) {
+    override func didCollide(with other: GameNode) {
         
         if other.name == Peashooter.className {
             // 检查当前状态，避免重复触发攻击动画
@@ -92,7 +93,17 @@ class Zombie: GameCharacter{
             self.removeAllActions()
             currentState = .attacking
             attack()
-            other.setAttackedBy(who: self)
+            // 强转为gameCharacter类型
+            if let gameCharacter = other as? GameCharacter {
+                gameCharacter.setAttackedBy(who: self)
+            }
+        } else if other.name == FireBeanBullet.className{
+            // 如果other没有creator但是other是GameCharacter类型
+            if let gameCharacter = other as? GameCharacter {
+                // 直接调用other的onDefeatedOther方法
+                gameCharacter.onDefeatedOther()
+            }
+            onGameCharacterDie()
         }
     }
     
@@ -101,9 +112,24 @@ class Zombie: GameCharacter{
             print("无法加载僵尸死亡动画帧")
             return
         }
-
+        self.currentState = .died
+        removeAllActions() //移除全部动画
+        self.physicsBody = nil //移除物理体，避免继续碰撞
         let boomDieAnimation = SKAction.animate(with: zombieBoomDieFrames, timePerFrame: 0.1)
-        self.run(boomDieAnimation, withKey: "boomDie")
+        
+        // 创建等待动作
+        let waitAction = SKAction.wait(forDuration: 0.5)
+        
+        // 创建一个块（block）动作来移除节点
+        let removeAction = SKAction.run { [weak self] in
+            self?.removeFromParent()
+        }
+        
+        // 将动画、等待和移除动作组合成一个序列
+        let sequence = SKAction.sequence([boomDieAnimation, waitAction, removeAction])
+        
+        // 执行序列动作
+        self.run(sequence, withKey: "boomDie")
     }
     
     override func onDefeatedOther() {

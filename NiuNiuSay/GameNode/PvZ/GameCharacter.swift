@@ -8,21 +8,19 @@
 import Foundation
 import SpriteKit
 
-let zombieCategory: UInt32 = 0x1 << 0
-let peashooterCategory: UInt32 = 0x1 << 1
+let groundCategory: UInt32 = 0x1 << 0
+let zombieCategory: UInt32 = 0x1 << 1
+let peashooterCategory: UInt32 = 0x1 << 2
+let bulletCategory: UInt32 = 0x1 << 3
 
-protocol GameCharacterDelegate: AnyObject {
-    func didCollide(with other: GameCharacter)
+protocol GameCharacterDelegate: GameNodeDelegate {
     
     func onGameCharacterDie()
     
     func onDefeatedOther()
 }
 
-open class GameCharacter : SKSpriteNode, GameCharacterDelegate{
-    func didCollide(with other: GameCharacter) {
-        
-    }
+open class GameCharacter : GameNode, GameCharacterDelegate{
     
     func onGameCharacterDie() {
         
