@@ -14,8 +14,9 @@ struct ProgressIndicator: View {
 
     var body: some View {
         Text("(\(currentTaskIndex + 1) / \(totalTasks))")
-            .font(.headline)
-            .frame(maxWidth: 60, alignment: .trailing)
+            .font(Font.custom("gongfanwanshihei", size: 24))
+            .frame(maxWidth:160, alignment: .trailing)
+            .foregroundColor(.white)
             .padding(0)
     }
 }

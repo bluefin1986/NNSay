@@ -45,6 +45,8 @@
 		75C492BC2B6DE74700DA76C0 /* FireBean.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492BB2B6DE74700DA76C0 /* FireBean.gif */; };
 		75C492BE2B6DF5A300DA76C0 /* GameNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492BD2B6DF5A300DA76C0 /* GameNode.swift */; };
 		75C492C02B6F72E700DA76C0 /* FireBeanBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492BF2B6F72E700DA76C0 /* FireBeanBullet.swift */; };
+		75C492C32B70CB5800DA76C0 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492C22B70CB5800DA76C0 /* Practice.swift */; };
+		75C492C52B70D87300DA76C0 /* Sun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492C42B70D87300DA76C0 /* Sun.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -107,6 +109,8 @@
 		75C492BB2B6DE74700DA76C0 /* FireBean.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = FireBean.gif; sourceTree = "<group>"; };
 		75C492BD2B6DF5A300DA76C0 /* GameNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameNode.swift; sourceTree = "<group>"; };
 		75C492BF2B6F72E700DA76C0 /* FireBeanBullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBeanBullet.swift; sourceTree = "<group>"; };
+		75C492C22B70CB5800DA76C0 /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
+		75C492C42B70D87300DA76C0 /* Sun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Sun.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +193,7 @@
 		75BC1D972B5E68E200F629C6 /* NiuNiuSay */ = {
 			isa = PBXGroup;
 			children = (
+				75C492C12B70CB4000DA76C0 /* DataModel */,
 				75C492B12B6BE82900DA76C0 /* GameNode */,
 				75C4929F2B6A51EE00DA76C0 /* Fonts */,
 				75C492902B6A1D4400DA76C0 /* GifPictures */,
@@ -258,6 +263,7 @@
 		75C492902B6A1D4400DA76C0 /* GifPictures */ = {
 			isa = PBXGroup;
 			children = (
+				75C492C42B70D87300DA76C0 /* Sun.gif */,
 				75C492BB2B6DE74700DA76C0 /* FireBean.gif */,
 				75C492B92B6D4C4100DA76C0 /* ZombieBoomDie.gif */,
 				75C492972B6A2D6F00DA76C0 /* Zombie.gif */,
@@ -293,6 +299,14 @@
 				75C492BF2B6F72E700DA76C0 /* FireBeanBullet.swift */,
 			);
 			path = PvZ;
+			sourceTree = "<group>";
+		};
+		75C492C12B70CB4000DA76C0 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				75C492C22B70CB5800DA76C0 /* Practice.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -408,6 +422,7 @@
 				75C492BC2B6DE74700DA76C0 /* FireBean.gif in Resources */,
 				75C492962B6A2B5000DA76C0 /* pea-shooter.gif in Resources */,
 				75C492882B695A2800DA76C0 /* MainGameScene.sks in Resources */,
+				75C492C52B70D87300DA76C0 /* Sun.gif in Resources */,
 				75C492982B6A2D6F00DA76C0 /* Zombie.gif in Resources */,
 				75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */,
 			);
@@ -446,6 +461,7 @@
 				75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */,
 				75C492B62B6BE89500DA76C0 /* Zombie.swift in Sources */,
 				75BB2DA32B69156100BAD1A6 /* ProcessIndicator.swift in Sources */,
+				75C492C32B70CB5800DA76C0 /* Practice.swift in Sources */,
 				75C492852B6920B500DA76C0 /* MenuItem.swift in Sources */,
 				75ADB1F72B5FEA9F001CFA08 /* SpeechRecognition.swift in Sources */,
 				75BC1DCB2B5E981300F629C6 /* PlayerController.swift in Sources */,

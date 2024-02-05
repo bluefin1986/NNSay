@@ -19,6 +19,8 @@ class Zombie: GameCharacter{
     var currentState: ZombieState = .walking
     
     var onExit : (() -> Void)?
+    var afterDeath : (() -> Void)?
+    
 
     init(scene: SKScene) {
         guard let zombieFrames = textures(fromGifNamed: "Zombie"),
@@ -53,11 +55,10 @@ class Zombie: GameCharacter{
             print("无法加载僵尸动画帧")
             return
         }
-
         let walkAnimation = SKAction.animate(with: zombieWalkFrames, timePerFrame: 0.1)
         self.run(SKAction.repeatForever(walkAnimation))
 
-        let moveAction = SKAction.moveTo(x: -self.size.width, duration: Double(self.position.x / walkSteps))
+        let moveAction = SKAction.moveTo(x: -self.size.width / 2, duration: Double(self.position.x / walkSteps))
         self.run(moveAction, completion: {
             self.removeFromParent()
             self.onExit?()
@@ -76,12 +77,7 @@ class Zombie: GameCharacter{
         self.run(repeatAttack, withKey: "attacking")
     }
     
-    func stopAttack() {
-        self.removeAction(forKey: "attacking") // 停止攻击动画
-        runZombieWalkAnimation(walkSteps: 30.0) // 恢复行走动画
-    }
-    
-    override func didCollide(with other: GameNode) {
+    override func didCollide(with other: GameNode, completion: (() -> Void)? = nil){
         
         if other.name == Peashooter.className {
             // 检查当前状态，避免重复触发攻击动画
@@ -105,6 +101,7 @@ class Zombie: GameCharacter{
             }
             onGameCharacterDie()
         }
+        completion?()
     }
     
     override func onGameCharacterDie() {
@@ -123,6 +120,7 @@ class Zombie: GameCharacter{
         // 创建一个块（block）动作来移除节点
         let removeAction = SKAction.run { [weak self] in
             self?.removeFromParent()
+            self?.afterDeath?()
         }
         
         // 将动画、等待和移除动作组合成一个序列
@@ -133,7 +131,8 @@ class Zombie: GameCharacter{
     }
     
     override func onDefeatedOther() {
-        stopAttack()
+        removeAllActions()
+        runZombieWalkAnimation(walkSteps: 30.0) // 恢复行走动画
     }
 
 }

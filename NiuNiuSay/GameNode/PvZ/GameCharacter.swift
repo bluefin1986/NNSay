@@ -11,7 +11,9 @@ import SpriteKit
 let groundCategory: UInt32 = 0x1 << 0
 let zombieCategory: UInt32 = 0x1 << 1
 let peashooterCategory: UInt32 = 0x1 << 2
-let bulletCategory: UInt32 = 0x1 << 3
+let peashooterWholeBodyCategory: UInt32 = 0x1 << 3
+let bulletCategory: UInt32 = 0x1 << 4
+let sunCategory: UInt32 = 0x1 << 5
 
 protocol GameCharacterDelegate: GameNodeDelegate {
     
@@ -30,9 +32,11 @@ open class GameCharacter : GameNode, GameCharacterDelegate{
         
     }
     
-    var attacker: GameCharacter?
+    var attackers: [GameCharacter] = []
     
     func setAttackedBy(who: GameCharacter){
-        self.attacker = who
+        if !attackers.contains(where: { $0 === who }) {
+            attackers.append(who)
+        }
     }
 }

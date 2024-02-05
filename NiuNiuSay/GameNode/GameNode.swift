@@ -9,7 +9,7 @@ import Foundation
 import SpriteKit
 
 protocol GameNodeDelegate {
-    func didCollide(with other: GameNode)
+    func didCollide(with other: GameNode, completion: (() -> Void)?)
 }
 
 open class GameNode: SKSpriteNode, GameNodeDelegate{
@@ -25,7 +25,7 @@ open class GameNode: SKSpriteNode, GameNodeDelegate{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func didCollide(with other: GameNode) {
+    func didCollide(with other: GameNode, completion: (() -> Void)? = nil) {
         
     }
     

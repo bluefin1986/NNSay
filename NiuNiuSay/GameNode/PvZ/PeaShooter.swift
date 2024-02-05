@@ -12,10 +12,13 @@ import SpriteKit
 class Peashooter: GameCharacter {
     
     static let className = "Peashooter"
+    static let headName = "PeashooterHead"
     var detectionTimer: Timer?
-    var ammoCount: Int = 10 // 假设初始载弹量为10
+    var ammoCount: Int = 0 // 假设初始载弹量为10
     // 已落地
     var onGround = false
+    var headPhysicsBodyCreated = false
+    var topPart:SKSpriteNode?
 
     init(scene: SKScene) {
         guard let peashooterFrames = textures(fromGifNamed: "pea-shooter"),
@@ -25,14 +28,13 @@ class Peashooter: GameCharacter {
         super.init(texture: firstFrame, color: .clear, size: firstFrame.size())
         self.name = Peashooter.className
         self.texture = peashooterFrames[0]
-        self.position = CGPoint(x: 280, y: scene.size.height + 100) // Start off-screen
+        self.position = CGPoint(x: 280, y: scene.size.height - 100) // Start off-screen
         self.size = CGSize(width: 100, height: 100)
         self.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.size.width / 2, height: self.size.height))
         self.physicsBody?.affectedByGravity = true
-//        self.physicsBody?.isDynamic = false // 使其不受重力影响
-//        self.physicsBody?.linearDamping = 5.0
-        self.physicsBody?.categoryBitMask = peashooterCategory
-        self.physicsBody?.collisionBitMask = groundCategory | zombieCategory
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.categoryBitMask = peashooterWholeBodyCategory
+        self.physicsBody?.collisionBitMask = groundCategory
         self.physicsBody?.contactTestBitMask = groundCategory
         self.physicsBody?.restitution = 0
         self.run(SKAction.repeatForever(SKAction.animate(with: peashooterFrames, timePerFrame: 0.1)))
@@ -42,12 +44,14 @@ class Peashooter: GameCharacter {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didCollide(with other: GameNode) {
+    override func didCollide(with other: GameNode, completion: (() -> Void)? = nil) {
         if other.name == Zombie.className {
             // 启动计时器，5秒后执行消失逻辑
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                 // 确保 Peashooter 还在场景中
-                guard self.parent != nil else { return }
+                guard self.parent != nil else {
+                    return
+                }
 
                 // Peashooter 消失逻辑
                 self.onGameCharacterDie()
@@ -57,6 +61,25 @@ class Peashooter: GameCharacter {
     
     override func didCollide(withGround ground: SKSpriteNode) {
         onGround = true
+        setupPeashooterHead()
+    }
+    
+    func setupPeashooterHead() {
+        if headPhysicsBodyCreated {
+            return
+        }
+        topPart = SKSpriteNode(color: .clear, size: CGSize(width: self.size.width / 2, height: self.size.height / 2))
+        topPart?.position = CGPoint(x: 0, y: self.size.height / 4) // 调整位置到上半部分
+        topPart?.physicsBody = SKPhysicsBody(rectangleOf: topPart!.size)
+        topPart?.physicsBody?.isDynamic = false
+        topPart?.physicsBody?.affectedByGravity = false // 不受重力影响
+        topPart?.physicsBody?.allowsRotation = false
+        topPart?.physicsBody?.categoryBitMask = peashooterCategory // 为上半部分设置一个独特的类别掩码
+        topPart?.physicsBody?.contactTestBitMask = sunCategory | zombieCategory // 设置为与太阳发生接触的掩码
+        topPart?.physicsBody?.collisionBitMask = sunCategory | zombieCategory // 设置为与太阳发生接触的掩码
+        topPart?.name = Peashooter.headName // 可选，为了识别
+        self.addChild(topPart!)
+        headPhysicsBodyCreated = true
     }
     
     func checkForZombiesAndFire() {
@@ -88,7 +111,9 @@ class Peashooter: GameCharacter {
     
     override func onGameCharacterDie() {
         self.removeFromParent()
-        attacker?.onDefeatedOther()
+        for attacker in attackers {
+            attacker.onDefeatedOther()
+        }
     }
     
     override func onDefeatedOther() {
@@ -108,6 +133,8 @@ class Peashooter: GameCharacter {
     
     override func removeFromParent() {
         super.removeFromParent()
+        topPart?.physicsBody = nil
+        topPart?.removeFromParent()
         invalidateTimer() // 当 Peashooter 被移除时停止定时器
     }
 }
