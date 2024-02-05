@@ -29,20 +29,21 @@ struct ReadAloudView: View {
     var body: some View{
         VStack(spacing: 0) {
             //GameView
+            let gameViewHeight:CGFloat = 450
             GeometryReader { geometry in
                 if mainGameScene == nil {
                     Color.clear
                         .onAppear {
-                            mainGameScene = MainGameScene(size: CGSize(width: geometry.size.width, height: geometry.size.height))
+                            mainGameScene = MainGameScene(size: CGSize(width: geometry.size.width, height: gameViewHeight))
                             mainGameScene?.setTaskStore(taskStore: taskStore)
                         }
                 } else {
                     SpriteView(scene: mainGameScene!)
-                        .frame(width: geometry.size.width, height: geometry.size.height)
+                        .frame(width: geometry.size.width, height: gameViewHeight)
                         .edgesIgnoringSafeArea(.all)
                 }
             }
-//            Spacer()
+            .frame(height: gameViewHeight)
             HStack(spacing: 0) {
                 VStack{
                     HStack {
@@ -59,9 +60,9 @@ struct ReadAloudView: View {
                     AttributedText(attributedString: displaySampleSentence,
                                    font: UIFont(name: "Arial", size: 40)!,
                                    color: .white)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity) // 限制最大宽高
-                        .fixedSize(horizontal: true, vertical: true) // 垂直方向上内容自适应
-                        .frame(height:95, alignment: .leading)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity) // 限制最大宽高
+                    .fixedSize(horizontal: true, vertical: true) // 垂直方向上内容自适应
+                    .frame(height:95, alignment: .leading)
                     HStack() {
                         Spacer()
                         ProgressIndicator(totalTasks: practices.count, currentTaskIndex: $taskStore.currentIndex)
@@ -73,77 +74,88 @@ struct ReadAloudView: View {
                         Spacer()
                     }
                     .padding(.top, 15)
-                    Spacer()
-//                    // 根据 answerResultLabel 显示不同的标签
-//                    if answerResultLabel == 1 {
-//                        Text("Good")
-//                            .foregroundColor(.green)
-//                            .onAppear {
-//                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//                                    //重置answerResultLabel
-//                                    answerResultLabel = 0
-//                                    nextSentence()
-//                                }
-//                            }
-//                    } else if answerResultLabel == 2 {
-//                        Text("Wrong")
-//                            .foregroundColor(.red)
-//                            .onAppear {
-//                                // 用户重新说
-//                            }
-//                    }
                     Text("中文意思：\(displayTranslation)")
                         .font(Font.custom("gongfanwanshihei", size: 24))
                         .foregroundColor(UIColor.init(colorHex: 0x8F441B).toColor)
                         .frame(alignment: .leading)
                     Spacer()
                 }
+                .frame(maxWidth: 700, maxHeight: 282)
                 .background(
                     Image("SentenceBoard") // 使用 Image 加载背景图片
                         .resizable() // 使图片可调整大小
-                        .aspectRatio(contentMode: .fill) // 填充模式，根据需要选择 .fit 或 .fill
+//                        .aspectRatio(contentMode: .fill) // 填充模式，根据需要选择 .fit 或 .fill
+                        .frame(maxWidth: 700, maxHeight: 282)
+                        .scaledToFit()
                 )
                 .padding(0)
-                .frame(height: 280)
-//                .frame(maxWidth: 350)
-                Spacer()
+                
                 HStack {
 //                    PlaySampleButton(sampleSpeekController: sampleSpeakController,
 //                                     isPlaying: $sampleSpeakController.isPlaying,
 //                                     sampleSentence: $originalSampleSentence)
-                    
+                    Spacer()
                     // 录音按钮
                     RecordButton(isRecording: $recorderController.isRecording, recorder: recorderController)
                     // 回放按钮
                     PlayButton(isPlaying: $playerController.isPlaying, player: playerController)
+                    Spacer()
                 }
                 .padding(0)
-                Spacer()
+                .frame(maxWidth: 294, maxHeight: 282)
+                .background(
+                    Image("RecorderBackground")
+                        .resizable()
+//                        .scaledToFill()
+                        .frame(width: 294, height: 282)
+                )
+                
             }
-            .padding(.bottom)
-//
-//            TextField("说出英文", text: $userAnswer)
-//                .padding()
-//                .onAppear {
-//                    recorderController.onRecognitionComplete = { recognizedText in
-//                        guard !recognizedText.isEmpty, recognizedText != userAnswer else {
-//                            return
-//                        }
-//                        userAnswer = recognizedText
-//                        let allMatched: Bool
-//                        (displaySampleSentence, allMatched) = compareAnswer(recognized: recognizedText, sample: originalSampleSentence)
-//                        answerResultLabel = allMatched ? 1 : 2
-//                        GameController.shared.handleMatchResult(answerResult: answerResultLabel)
-//                    }
-//                }
+            
+////                    // 根据 answerResultLabel 显示不同的标签
+////                    if answerResultLabel == 1 {
+////                        Text("Good")
+////                            .foregroundColor(.green)
+////                            .onAppear {
+////                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+////                                    //重置answerResultLabel
+////                                    answerResultLabel = 0
+////                                    nextSentence()
+////                                }
+////                            }
+////                    } else if answerResultLabel == 2 {
+////                        Text("Wrong")
+////                            .foregroundColor(.red)
+////                            .onAppear {
+////                                // 用户重新说
+////                            }
+////                    }
+                   
+////                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .frame(width: 400)
+             
+////
+////            TextField("说出英文", text: $userAnswer)
+////                .padding()
+////                .onAppear {
+////                    recorderController.onRecognitionComplete = { recognizedText in
+////                        guard !recognizedText.isEmpty, recognizedText != userAnswer else {
+////                            return
+////                        }
+////                        userAnswer = recognizedText
+////                        let allMatched: Bool
+////                        (displaySampleSentence, allMatched) = compareAnswer(recognized: recognizedText, sample: originalSampleSentence)
+////                        answerResultLabel = allMatched ? 1 : 2
+////                        GameController.shared.handleMatchResult(answerResult: answerResultLabel)
+////                    }
+////                }
             
         }
-        .padding()
+        .padding(0)
         .onAppear {
             loadSentences()
             updateSentences()
         }
-        .padding(.bottom)
         .frame(maxWidth: .infinity, alignment: .bottom)
     }
     
