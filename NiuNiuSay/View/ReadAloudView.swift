@@ -157,7 +157,9 @@ struct ReadAloudView: View {
         }
         // 最后一下，不要再增加计数了，不然进度指示器会溢出
         if taskStore.currentIndex < practices.count - 1{
-            taskStore.currentIndex += 1
+            DispatchQueue.main.async {
+                taskStore.currentIndex += 1
+            }
         }
         updateSentences()
         mainGameScene?.addAmmoToPeashooter()
@@ -205,33 +207,33 @@ struct ReadAloudView: View {
                 "sentence": "This is a dog",
                 "translation" :"这是一只狗"
             },
-            
+            {
+                "sentence": "This is a dolphin",
+                "translation" :"这是一只海豚"
+            },
+            {
+                "sentence": "These are monkeys",
+                "translation" :"这些是猴子"
+            },
+            {
+                "sentence": "These are apples",
+                "translation" :"这些是苹果"
+            },
+            {
+                "sentence": "These are cherry",
+                "translation" :"这些是樱桃"
+            },
+            {
+                "sentence": "These are eggs",
+                "translation" :"这些是鸡蛋"
+            },
+            {
+                "sentence": "These is an eggs",
+                "translation" :"这是一颗鸡蛋"
+            },
         ]
         """
-//        {
-//            "sentence": "This is a dolphin",
-//            "translation" :"这是一只海豚"
-//        },
-//        {
-//            "sentence": "These are monkeys",
-//            "translation" :"这些是猴子"
-//        },
-//        {
-//            "sentence": "These are apples",
-//            "translation" :"这些是苹果"
-//        },
-//        {
-//            "sentence": "These are cherry",
-//            "translation" :"这些是樱桃"
-//        },
-//        {
-//            "sentence": "These are eggs",
-//            "translation" :"这些是鸡蛋"
-//        },
-//        {
-//            "sentence": "These is an eggs",
-//            "translation" :"这是一颗鸡蛋"
-//        },
+
         if let data = practiceJson.data(using: .utf8) {
             do {
                 let decoder = JSONDecoder()
@@ -255,7 +257,9 @@ struct ReadAloudView: View {
 
     private func nextSentence() {
         if taskStore.currentIndex < practices.count - 1 {
-            taskStore.currentIndex += 1
+            DispatchQueue.main.async {
+                taskStore.currentIndex += 1
+            }
             updateSentences()
         }
     }

@@ -20,5 +20,53 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C16BDCCA-736E-4BA5-A902-21E43E3E7B1C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NiuNiuSay/Scenes/MainGameScene.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "didBegin(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C16BDCCA-736E-4BA5-A902-21E43E3E7B1C - 165232126364ce19"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in NiuNiuSay.MainGameScene.didBegin(__C.SKPhysicsContact) -&gt; ()"
+                  moduleName = "NiuNiuSay"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhengminjia/Workspace/iosworkspace/NiuNiuSay/NiuNiuSay/Scenes/MainGameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "209"
+                  endingLineNumber = "209"
+                  offsetFromSymbolStart = "552">
+               </Location>
+               <Location
+                  uuid = "C16BDCCA-736E-4BA5-A902-21E43E3E7B1C - 165232126364ce19"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in NiuNiuSay.MainGameScene.didBegin(__C.SKPhysicsContact) -&gt; ()"
+                  moduleName = "NiuNiuSay"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhengminjia/Workspace/iosworkspace/NiuNiuSay/NiuNiuSay/Scenes/MainGameScene.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "209"
+                  endingLineNumber = "209"
+                  offsetFromSymbolStart = "76">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

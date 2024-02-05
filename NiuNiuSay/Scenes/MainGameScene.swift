@@ -118,7 +118,9 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
         let zombie = Zombie(scene: self)
         zombie.onExit = showGameOver
         zombie.afterDeath = { [weak self] in
-            self?.taskStore?.correctCount += 1
+            DispatchQueue.main.async {
+                self?.taskStore?.correctCount += 1
+            }
         }
         self.releasedZombies.append(zombie)
         self.releasedZombiesCount += 1
@@ -246,6 +248,10 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
         if !firstRun {
             // 关闭对话框（如果已经添加到场景中）
             if let dialog = childNode(withName: "pvzDialog") as? PvZDialogNode {
+                for zombie in releasedZombies{
+                    zombie.physicsBody = nil
+                    zombie.removeFromParent()
+                }
                 releasedZombies.removeAll()
                 self.releasedZombiesCount = 0
                 dialog.removeFromParent()
