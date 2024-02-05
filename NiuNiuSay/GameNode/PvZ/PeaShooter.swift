@@ -19,6 +19,9 @@ class Peashooter: GameCharacter {
     var onGround = false
     var headPhysicsBodyCreated = false
     var topPart:SKSpriteNode?
+    
+    // 用于取消延迟任务的 DispatchWorkItem 引用
+    var disappearWorkItem: DispatchWorkItem?
 
     init(scene: SKScene) {
         guard let peashooterFrames = textures(fromGifNamed: "pea-shooter"),
@@ -46,16 +49,18 @@ class Peashooter: GameCharacter {
     
     override func didCollide(with other: GameNode, completion: (() -> Void)? = nil) {
         if other.name == Zombie.className {
-            // 启动计时器，5秒后执行消失逻辑
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                // 确保 Peashooter 还在场景中
-                guard self.parent != nil else {
-                    return
-                }
+            // 创建一个新的 DispatchWorkItem
+            let workItem = DispatchWorkItem { [weak self] in
+                guard let self = self, self.parent != nil else { return }
 
                 // Peashooter 消失逻辑
                 self.onGameCharacterDie()
             }
+            
+            // 保存对这个 work item 的引用，以便可以取消它
+            disappearWorkItem = workItem
+            // 调度 work item 在 5 秒后执行
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5, execute: workItem)
         }
     }
     
@@ -102,10 +107,7 @@ class Peashooter: GameCharacter {
         self.scene?.addChild(bullet) // 将子弹添加到场景中
         // 发射子弹
         let moveAction = SKAction.moveBy(x: (self.scene?.size.width)! + bullet.size.width, y: 0, duration: 2) // 向前移动
-//        let removeAction = SKAction.removeFromParent() // 移动完成后移除子弹
-//        bullet.run(SKAction.sequence([moveAction, removeAction]))
         bullet.run(moveAction)
-        
     }
     
     
@@ -116,8 +118,12 @@ class Peashooter: GameCharacter {
         }
     }
     
+    // 被攻击状态下，反击击杀对方，要取消定时器，避免自己被消失
     override func onDefeatedOther() {
-        
+        // 取消延迟执行的任务
+        disappearWorkItem?.cancel()
+        // 清除引用，以便 work item 可以被释放
+        disappearWorkItem = nil
     }
     
     func setupTimerForZombieDetection() {
