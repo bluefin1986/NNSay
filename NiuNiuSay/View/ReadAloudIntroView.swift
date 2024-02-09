@@ -8,14 +8,19 @@
 import Foundation
 import SwiftUI
 
+
 struct ReadAloudIntroView: View {
     // 状态变量控制视图切换
-    @State private var showReadAloudView = false
-    @State private var isBackgroundZoomed = false
-
+//    @EnvironmentObject var dailyMission: DailyMission
+    @ObservedObject var taskStore: TaskStore
+    
+    init (taskStore: TaskStore){
+        self.taskStore = taskStore
+    }
+    
     var body: some View {
-        if showReadAloudView {
-            ReadAloudView()
+        if taskStore.onProcess {
+            ReadAloudView(taskStore: taskStore)
         } else {
             ZStack {
                 // 背景图片
@@ -44,8 +49,9 @@ struct ReadAloudIntroView: View {
                             .padding(.trailing, 100)
                             // 开始按钮
                             Button(action: {
-                                // 当点击时，切换视图
-                                self.showReadAloudView = true
+                                // 当点击时，把奖励值置0，切换视图开始游戏
+                                taskStore.onProcess = true
+                                taskStore.award = 0
                             }) {
                                 ZStack {
                                     Image("PvZButton") // 替换为你的按钮图片名称

@@ -6,8 +6,6 @@
 //
 
 import Foundation
-// Buttons.swift
-
 import SwiftUI
 
 
@@ -16,45 +14,83 @@ struct RecordButton: View {
     @Binding var isRecording: Bool
     @ObservedObject var recorder: RecorderController
     @State private var isPressing = false
+    @State private var microphoneMaskFill: CGFloat = 0.5
     
-    private let microPhoneIconSquareSize = CGFloat(100)
+    private let microPhoneWidth = CGFloat(194)
     
     var body: some View {
         ZStack{
-            
-            Button {
-                // 点击事件为空，由长按事件处理
-            } label: {
-                Image(systemName: "mic.circle.fill")
+            Image("Microphone")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: microPhoneWidth)
+//                .buttonStyle(PlainButtonStyle()) // 移除按钮默认的背景效果
+//                .contentShape(Rectangle()) // 确保点击效果应用于整个按钮区域
+//                .animation(nil, value: isPressing)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged{ value in
+                            isPressing = true
+                            if !isRecording {
+                                recorder.startRecording()
+                            }
+                        }
+                        .onEnded{ state in
+                            isPressing = false
+                            if isRecording {
+                                recorder.stopRecording()
+                            }
+                        }
+            )
+            // 作为遮罩的 MicMask 图标
+            VStack{
+                Image("MicMask")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: microPhoneIconSquareSize, height: microPhoneIconSquareSize)
-                    .foregroundColor(.blue)
+                    .frame(width: 66)
+                    .foregroundColor(.blue) // 遮罩的填充颜色
+                    .mask(
+                        Rectangle()
+                            .fill(Color.white) // 遮罩颜色（不重要，因为它是遮罩）
+                            .frame(width: 100, height: 100 * microphoneMaskFill)
+                            .offset(y: 66 - (100 * microphoneMaskFill) / 2) // 调整遮罩的位置
+                    )
+                    .onDisappear {
+                        isAnimating = false // 当视图消失时停止动画
+                    }
+                    .onAppear {
+                        isAnimating = true
+                        incrementMicrophoneFill()
+                    }
+                Spacer()
             }
-            .buttonStyle(PlainButtonStyle()) // 移除按钮默认的背景效果
-            .padding()
-            .simultaneousGesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged{ value in
-                        isPressing = true
-                        if !isRecording {
-                            recorder.startRecording()
-                        }
-                    }
-                    .onEnded{ state in
-                        isPressing = false
-                        if isRecording {
-                            recorder.stopRecording()
-                        }
-                    }
-            )
-            Circle()
-                .fill(Color.blue)
-                .frame(width: microPhoneIconSquareSize, height: microPhoneIconSquareSize)
-                .scaleEffect(calculateMeterCircle())
-                .opacity(isPressing ? 0.5 : 0)
+        }
+        .padding(.top, 30)
+    }
+    
+    let animationStep: CGFloat = 0.1 // 每步变化的量
+    let animationInterval = 0.1 // 每0.5秒变化一次
+    @State private var isAnimating = true
+
+    private func incrementMicrophoneFill() {
+        guard isAnimating else { return } // 检查是否应该继续动画
+        let newValue = microphoneMaskFill + animationStep > 1 ? 0 : microphoneMaskFill + animationStep
+        withAnimation(.linear(duration: animationInterval)) {
+            microphoneMaskFill = newValue
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + animationInterval) {
+            incrementMicrophoneFill()
         }
     }
+//    private func startUpdatingMicrophoneFill() {
+//        // 通过定时器或其他方式定期更新 microphoneFill
+//        // 这里你需要获取到音量并将其映射到 0 到 1 的范围内
+//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+//            // 这里是假设的音量获取方法
+//    
+//            self.microphoneFill = min(max(0, volume / maxVolume), 1) // 确保值在 0 到 1 之间
+//        }
+//    }
    
     private func calculateMeterCircle() -> CGFloat{
         let minScale: CGFloat = 0.5
@@ -76,16 +112,19 @@ struct PlayButton: View {
     var player : PlayerController
     
     var body: some View {
-        Button(action: {
-            player.togglePlaying()
-        }) {
-            Image(systemName: isPlaying ? "stop.circle.fill" : "play.circle.fill")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-                .foregroundColor(isPlaying ? .red : .green)
+        HStack{
+            Spacer()
+            Button(action: {
+                player.togglePlaying()
+            }) {
+                Image(isPlaying ? "PlayerStop" : "PlayerPlay")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+            }
+            .padding(.trailing, 30)
+            .frame(alignment: .trailing)
         }
-        .padding()
     }
 }
 

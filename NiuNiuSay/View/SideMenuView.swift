@@ -10,6 +10,7 @@ import SwiftUI
 
 struct SideMenuView: View {
     @State private var selectedMenuItem: String = "朗读练习"
+    @EnvironmentObject var dailyMission: DailyMission
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -40,18 +41,27 @@ struct SideMenuView: View {
             .frame(height:  80)
             .cornerRadius(10) // Optional: if you want rounded corners
             .padding(.horizontal, 8)
-            
+            .padding(.top, 20)
             Divider()
             
             HStack() {
                 Spacer()
                 VStack{
                     MenuItem(title: "朗读练习", icon: "smile", isSelected: selectedMenuItem == "朗读练习")
-                        .onTapGesture { selectedMenuItem = "朗读练习" }
+                        .onTapGesture {
+                            selectedMenuItem = "朗读练习"
+                            dailyMission.currentTask.taskType = .readAloud
+                        }
                     MenuItem(title: "英翻中练习", icon: "eng2chn", isSelected: selectedMenuItem == "英翻中练习")
-                        .onTapGesture { selectedMenuItem = "英翻中练习" }
+                        .onTapGesture {
+                            selectedMenuItem = "英翻中练习"
+                            dailyMission.currentTask.taskType = .englishToChinese
+                        }
                     MenuItem(title: "中翻英练习", icon: "chn2eng", isSelected: selectedMenuItem == "中翻英练习")
-                        .onTapGesture { selectedMenuItem = "中翻英练习" }
+                        .onTapGesture {
+                            selectedMenuItem = "中翻英练习"
+                            dailyMission.currentTask.taskType = .chineseToEnglish
+                        }
                     MenuItem(title: "Settings", icon: "setting", isSelected: selectedMenuItem == "Settings")
                         .onTapGesture { selectedMenuItem = "Settings" }
                 }

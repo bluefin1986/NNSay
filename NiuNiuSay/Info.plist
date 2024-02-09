@@ -4,6 +4,7 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SF-Pro-Rounded-Bold.otf</string>
 		<string>GongFanWanShiHei-2.ttf</string>
 	</array>
 </dict>

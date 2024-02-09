@@ -11,9 +11,8 @@ import UIKit
 import SpriteKit
 
 struct ReadAloudView: View {
-    @State private var practices: [Practice] = []
+    @ObservedObject var taskStore: TaskStore
     @State private var answerResultLabel: Int = 0
-    @StateObject private var taskStore = TaskStore()
     @State private var originalSampleSentence: String = ""
     @State private var displaySampleSentence : NSMutableAttributedString = NSMutableAttributedString(string: "")
     @State private var displayTranslation: String = ""
@@ -26,6 +25,10 @@ struct ReadAloudView: View {
     
     @State private var mainGameScene: MainGameScene? = nil
     
+    init(taskStore: TaskStore){
+        self.taskStore = taskStore
+    }
+    
     var body: some View{
         VStack(spacing: 0) {
             //GameView
@@ -34,8 +37,8 @@ struct ReadAloudView: View {
                 if mainGameScene == nil {
                     Color.clear
                         .onAppear {
-                            mainGameScene = MainGameScene(size: CGSize(width: geometry.size.width, height: gameViewHeight))
-                            mainGameScene?.setTaskStore(taskStore: taskStore)
+                            mainGameScene = MainGameScene(size: CGSize(width: geometry.size.width, height: gameViewHeight),
+                                                          taskStore: taskStore)
                         }
                 } else {
                     SpriteView(scene: mainGameScene!)
@@ -65,7 +68,7 @@ struct ReadAloudView: View {
                     .frame(height:95, alignment: .leading)
                     HStack() {
                         Spacer()
-                        ProgressIndicator(totalTasks: practices.count, currentTaskIndex: $taskStore.currentIndex)
+                        ProgressIndicator(totalTasks: taskStore.getPracticesCount(), currentTaskIndex: taskStore.currentPracticeIndex)
                             .frame(width: 100)
                         Text("请用英文说出这个句子")
                             .font(Font.custom("gongfanwanshihei", size: 24))
@@ -74,6 +77,7 @@ struct ReadAloudView: View {
                         Spacer()
                     }
                     .padding(.top, 15)
+                    Spacer()
                     Text("中文意思：\(displayTranslation)")
                         .font(Font.custom("gongfanwanshihei", size: 24))
                         .foregroundColor(UIColor.init(colorHex: 0x8F441B).toColor)
@@ -90,7 +94,7 @@ struct ReadAloudView: View {
                 )
                 .padding(0)
                 
-                HStack {
+                VStack {
 //                    PlaySampleButton(sampleSpeekController: sampleSpeakController,
 //                                     isPlaying: $sampleSpeakController.isPlaying,
 //                                     sampleSentence: $originalSampleSentence)
@@ -153,7 +157,6 @@ struct ReadAloudView: View {
         }
         .padding(0)
         .onAppear {
-            loadSentences()
             updateSentences()
         }
         .frame(maxWidth: .infinity, alignment: .bottom)
@@ -163,18 +166,18 @@ struct ReadAloudView: View {
       * 回答正确，跳下一题
      */
     private func nextPractice(){
-        print("currentIndex \(taskStore.currentIndex + 1), practices count \(practices.count)")
-        if taskStore.currentIndex == practices.count{
+        print("currentIndex \(taskStore.currentPracticeIndex + 1), practices count \(taskStore.getPracticesCount())")
+        if taskStore.currentPracticeIndex == taskStore.getPracticesCount(){
             return
         }
         // 最后一下，不要再增加计数了，不然进度指示器会溢出
-        if taskStore.currentIndex < practices.count - 1{
+        if taskStore.currentPracticeIndex < taskStore.getPracticesCount(){
             DispatchQueue.main.async {
-                taskStore.currentIndex += 1
+                taskStore.currentPracticeIndex += 1
+                updateSentences()
+                mainGameScene?.addAmmoToPeashooter()
             }
         }
-        updateSentences()
-        mainGameScene?.addAmmoToPeashooter()
     }
     
     // 比较用户的回答和标准答案，生成差异比较结果
@@ -206,61 +209,10 @@ struct ReadAloudView: View {
         return (attributedString, allMatched)
     }
     
-    // 在这里读取 JSON 数据并初始化 sentences
-    private func loadSentences() {
-        // 假设您已经有了一个包含 JSON 数据的字符串
-        let practiceJson = """
-        [
-            {
-                "sentence": "This is an apple",
-                "translation" :"这是一颗苹果"
-            },
-            {
-                "sentence": "This is a dog",
-                "translation" :"这是一只狗"
-            },
-            {
-                "sentence": "This is a dolphin",
-                "translation" :"这是一只海豚"
-            },
-            {
-                "sentence": "These are monkeys",
-                "translation" :"这些是猴子"
-            },
-            {
-                "sentence": "These are apples",
-                "translation" :"这些是苹果"
-            },
-            {
-                "sentence": "These are cherry",
-                "translation" :"这些是樱桃"
-            },
-            {
-                "sentence": "These are eggs",
-                "translation" :"这些是鸡蛋"
-            },
-            {
-                "sentence": "These is an eggs",
-                "translation" :"这是一颗鸡蛋"
-            },
-        ]
-        """
-
-        if let data = practiceJson.data(using: .utf8) {
-            do {
-                let decoder = JSONDecoder()
-                let practices = try decoder.decode([Practice].self, from: data)
-                self.practices = practices // 更新你的状态变量
-                self.taskStore.totalTaskCount = practices.count
-            } catch {
-                print("Error parsing JSON: \(error)")
-            }
-        }
-    }
     
     private func updateSentences() {
-        if taskStore.currentIndex < practices.count {
-            let practice = practices[taskStore.currentIndex]
+        if taskStore.currentPracticeIndex < taskStore.getPracticesCount() {
+            let practice = taskStore.getPractices()[taskStore.currentPracticeIndex]
             originalSampleSentence = practice.sentence
             displaySampleSentence = NSMutableAttributedString(string: originalSampleSentence)
             displayTranslation = practice.translation
@@ -268,9 +220,9 @@ struct ReadAloudView: View {
     }
 
     private func nextSentence() {
-        if taskStore.currentIndex < practices.count - 1 {
+        if taskStore.currentPracticeIndex < taskStore.getPracticesCount() - 1 {
             DispatchQueue.main.async {
-                taskStore.currentIndex += 1
+                taskStore.currentPracticeIndex += 1
             }
             updateSentences()
         }

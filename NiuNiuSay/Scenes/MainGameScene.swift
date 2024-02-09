@@ -33,12 +33,13 @@ func textures(fromGifNamed name: String) -> [SKTexture]? {
 }
 
 class MainGameScene: SKScene, SKPhysicsContactDelegate {
+    
     private var peashooter: Peashooter?
     let background = SKSpriteNode(imageNamed: "background")
     private var zombieSpawnTimer: Timer?
     private var releasedZombies:[Zombie] = [] //已生成的僵尸数组
     private var releasedZombiesCount: Int = 0 //已生成的僵尸数量
-    var taskStore: TaskStore?
+    @ObservedObject var taskStore: TaskStore
     
     private var firstRun = true
     
@@ -46,7 +47,8 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
         self.taskStore = taskStore
     }
     
-    override init(size: CGSize){
+    init(size: CGSize, taskStore: TaskStore){
+        self.taskStore = taskStore
         super.init(size: size)
         setupBackground()
     }
@@ -98,10 +100,11 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
     
     func startZombieSpawnTimer() {
         zombieSpawnTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
-            if self!.taskStore == nil {
-                return
-            }
-            if self!.releasedZombiesCount < self!.taskStore!.totalTaskCount {
+//            if ContentView.taskStore == nil {
+//                return
+//            }
+            print("released \(self!.releasedZombiesCount) zombies, total will be \(self!.taskStore.getPracticesCount())")
+            if self!.releasedZombiesCount < self!.taskStore.getPracticesCount() {
                 let zombie = self?.setupZombie()
                 if zombie == nil {
                     return
@@ -117,9 +120,9 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
     func setupZombie() -> Zombie{
         let zombie = Zombie(scene: self)
         zombie.onExit = showGameOver
-        zombie.afterDeath = { [weak self] in
+        zombie.afterDeath = {
             DispatchQueue.main.async {
-                self?.taskStore?.correctCount += 1
+                self.taskStore.increaseCorrect()
             }
         }
         self.releasedZombies.append(zombie)
@@ -206,8 +209,8 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
             if let zombie = contact.bodyA.node as? Zombie ?? contact.bodyB.node as? Zombie,
                let bullet = contact.bodyA.node as? FireBeanBullet ?? contact.bodyB.node as? FireBeanBullet {
                 zombie.didCollide(with: bullet) {
-                    if self.taskStore?.taskFinished() == true{
-                        print("恭喜通关！！！")
+                    if self.taskStore.taskFinished{
+                        print("恭喜通关")
                     }
                 }
             }
@@ -256,7 +259,9 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
                 self.releasedZombiesCount = 0
                 dialog.removeFromParent()
                 dialogShown = false
-                taskStore?.currentIndex = 0
+                DispatchQueue.main.async {
+                    self.taskStore.currentPracticeIndex = 0
+                }
                 peashooter?.removeFromParent()
             }
             // 重置地图缩放

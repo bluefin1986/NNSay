@@ -47,6 +47,10 @@
 		75C492C02B6F72E700DA76C0 /* FireBeanBullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492BF2B6F72E700DA76C0 /* FireBeanBullet.swift */; };
 		75C492C32B70CB5800DA76C0 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492C22B70CB5800DA76C0 /* Practice.swift */; };
 		75C492C52B70D87300DA76C0 /* Sun.gif in Resources */ = {isa = PBXBuildFile; fileRef = 75C492C42B70D87300DA76C0 /* Sun.gif */; };
+		75C492C72B727A3800DA76C0 /* PvZAwardDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492C62B727A3800DA76C0 /* PvZAwardDialogView.swift */; };
+		75C492CA2B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75C492C92B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf */; };
+		75C492CC2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492CB2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift */; };
+		75C492CE2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492CD2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +115,10 @@
 		75C492BF2B6F72E700DA76C0 /* FireBeanBullet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBeanBullet.swift; sourceTree = "<group>"; };
 		75C492C22B70CB5800DA76C0 /* Practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		75C492C42B70D87300DA76C0 /* Sun.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Sun.gif; sourceTree = "<group>"; };
+		75C492C62B727A3800DA76C0 /* PvZAwardDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PvZAwardDialogView.swift; sourceTree = "<group>"; };
+		75C492C92B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
+		75C492CB2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishToChineseIntroView.swift; sourceTree = "<group>"; };
+		75C492CD2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseToEnglishIntroView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +162,8 @@
 				75BB2D9F2B68FF4E00BAD1A6 /* SideMenuView.swift */,
 				75BB2DA42B6916BF00BAD1A6 /* ReadAloudView.swift */,
 				75C4929D2B6A345E00DA76C0 /* ReadAloudIntroView.swift */,
+				75C492CB2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift */,
+				75C492CD2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,6 +175,7 @@
 				75BB2DA22B69156100BAD1A6 /* ProcessIndicator.swift */,
 				75C492842B6920B500DA76C0 /* MenuItem.swift */,
 				75C492A22B6A884B00DA76C0 /* PvZDialogNode.swift */,
+				75C492C62B727A3800DA76C0 /* PvZAwardDialogView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -276,6 +287,7 @@
 		75C4929F2B6A51EE00DA76C0 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				75C492C92B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf */,
 				75C492A02B6A535D00DA76C0 /* GongFanWanShiHei-2.ttf */,
 			);
 			path = Fonts;
@@ -414,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75C492BA2B6D4C4100DA76C0 /* ZombieBoomDie.gif in Resources */,
+				75C492CA2B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf in Resources */,
 				75C492A12B6A76E800DA76C0 /* GongFanWanShiHei-2.ttf in Resources */,
 				75BC1DA02B5E68E300F629C6 /* Preview Assets.xcassets in Resources */,
 				7588D03A2B6563E300E0B966 /* success.mp3 in Resources */,
@@ -449,13 +462,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C492C72B727A3800DA76C0 /* PvZAwardDialogView.swift in Sources */,
 				75C4928F2B695E3F00DA76C0 /* MainGameScene.swift in Sources */,
 				75C492B42B6BE87400DA76C0 /* PeaShooter.swift in Sources */,
 				75BC1DC92B5E97AE00F629C6 /* Buttons.swift in Sources */,
 				7588D0372B655EBB00E0B966 /* GameController.swift in Sources */,
 				75BC1DCD2B5E99CA00F629C6 /* GlobalParams.swift in Sources */,
 				75BB2DA52B6916BF00BAD1A6 /* ReadAloudView.swift in Sources */,
+				75C492CC2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift in Sources */,
 				75BC1DC52B5E787E00F629C6 /* RecorderController.swift in Sources */,
+				75C492CE2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift in Sources */,
 				75C492BE2B6DF5A300DA76C0 /* GameNode.swift in Sources */,
 				75BB2DA02B68FF4E00BAD1A6 /* SideMenuView.swift in Sources */,
 				75C492A32B6A884B00DA76C0 /* PvZDialogNode.swift in Sources */,

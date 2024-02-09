@@ -10,10 +10,10 @@ import SwiftUI
 
 struct ProgressIndicator: View {
     var totalTasks: Int
-    @Binding var currentTaskIndex: Int
+    var currentTaskIndex: Int
 
     var body: some View {
-        Text("(\(currentTaskIndex + 1) / \(totalTasks))")
+        Text("(\(currentTaskIndex) / \(totalTasks))")
             .font(Font.custom("gongfanwanshihei", size: 24))
             .frame(maxWidth:160, alignment: .trailing)
             .foregroundColor(.white)

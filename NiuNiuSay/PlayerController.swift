@@ -28,12 +28,18 @@ class PlayerController: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     // 开始回放录音
     public func startPlaying() {
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
-            audioPlayer?.delegate = self
-            audioPlayer?.play()
-        } catch {
-            print("播放录音失败：\(error)")
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            do {
+                guard let self = self else { return }
+                self.audioPlayer = try AVAudioPlayer(contentsOf: audioFilename)
+                self.audioPlayer?.delegate = self
+                self.audioPlayer?.prepareToPlay() // 可选，减少播放开始的延迟
+                self.audioPlayer?.play()
+            } catch {
+                DispatchQueue.main.async {
+                    print("播放录音失败：\(error)")
+                }
+            }
         }
     }
     
@@ -45,7 +51,11 @@ class PlayerController: NSObject, ObservableObject, AVAudioPlayerDelegate {
     
     // 停止回放录音
     public func stopPlaying() {
-        audioPlayer?.stop()
-        audioPlayer = nil
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            self?.audioPlayer?.stop()
+            DispatchQueue.main.async {
+                self?.audioPlayer = nil
+            }
+        }
     }
 }
