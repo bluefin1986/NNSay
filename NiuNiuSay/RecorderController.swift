@@ -101,10 +101,10 @@ class RecorderController: ObservableObject {
                     switch result {
                     case .success(let recognizedText):
                         self.recognizedText = recognizedText
-                        print("Recognition success: \(recognizedText)")
+                        print("======>Recognition success: \(recognizedText) , and onRecognitionComplete is \(String(describing: onRecognitionComplete))")
                         onRecognitionComplete?(recognizedText)
                     case .failure(let error):
-                        print("Recognition failure: \(error)")
+                        print("======>Recognition failure: \(error)")
                     }
                 }
             }
@@ -112,5 +112,9 @@ class RecorderController: ObservableObject {
         print("recording stopped...\(audioFilename)")
     }
     
-    var onRecognitionComplete: ((String) -> Void)? 
+    var onRecognitionComplete: ((String) -> Void)? {
+        didSet {
+            print("onRecognitionComplete was set")
+        }
+    }
 }

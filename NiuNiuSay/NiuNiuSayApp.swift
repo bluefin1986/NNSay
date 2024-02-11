@@ -37,7 +37,7 @@ struct SplashView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             // 延迟2秒钟
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 withAnimation {
                     self.initFinished = true
                 }

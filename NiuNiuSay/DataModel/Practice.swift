@@ -40,34 +40,34 @@ class DailyMission: ObservableObject{
                 "sentence": "This is a dog",
                 "translation" :"这是一只狗"
             },
-            
+            {
+                "sentence": "This is a dolphin",
+                "translation" :"这是一只海豚"
+            },
+            {
+                "sentence": "These are monkeys",
+                "translation" :"这些是猴子"
+            },
+            {
+                "sentence": "These are apples",
+                "translation" :"这些是苹果"
+            },
+            {
+                "sentence": "These are cherry",
+                "translation" :"这些是樱桃"
+            },
+            {
+                "sentence": "These are eggs",
+                "translation" :"这些是鸡蛋"
+            },
+            {
+                "sentence": "This is an egg",
+                "translation" :"这是一颗鸡蛋"
+            },
             
         ]
         """
-//        {
-//            "sentence": "This is a dolphin",
-//            "translation" :"这是一只海豚"
-//        },
-//        {
-//            "sentence": "These are monkeys",
-//            "translation" :"这些是猴子"
-//        },
-//        {
-//            "sentence": "These are apples",
-//            "translation" :"这些是苹果"
-//        },
-//        {
-//            "sentence": "These are cherry",
-//            "translation" :"这些是樱桃"
-//        },
-//        {
-//            "sentence": "These are eggs",
-//            "translation" :"这些是鸡蛋"
-//        },
-//        {
-//            "sentence": "These is an eggs",
-//            "translation" :"这是一颗鸡蛋"
-//        },
+
         if let data = practiceJson.data(using: .utf8) {
             do {
                 let decoder = JSONDecoder()

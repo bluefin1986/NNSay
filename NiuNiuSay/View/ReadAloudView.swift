@@ -17,10 +17,9 @@ struct ReadAloudView: View {
     @State private var displaySampleSentence : NSMutableAttributedString = NSMutableAttributedString(string: "")
     @State private var displayTranslation: String = ""
     
-    @State private var userAnswer = ""
     // 音频录制和回放相关的属性
     @ObservedObject private var sampleSpeakController = SampleSpeakController()
-    @ObservedObject private var recorderController = RecorderController()
+    @StateObject private var recorderController = RecorderController()
     @ObservedObject private var playerController = PlayerController()
     
     @State private var mainGameScene: MainGameScene? = nil
@@ -59,7 +58,7 @@ struct ReadAloudView: View {
                             Button(action: {
 //                                nextPractice()
                                 DispatchQueue.main.async {
-                                    var debugSentence = taskStore.getPractices()[taskStore.currentPracticeIndex].sentence
+                                    let debugSentence = taskStore.getPractices()[taskStore.currentPracticeIndex].sentence
 //                                    debugSentence = randomizeCharacters(in: debugSentence)
                                     handleRecognizedText(recognizedText:debugSentence)
                                 }
@@ -129,8 +128,6 @@ struct ReadAloudView: View {
             }
             
             // 根据 answerResultLabel 显示不同的标签
-
-             
             
         }
         .padding(0)
@@ -138,6 +135,7 @@ struct ReadAloudView: View {
             recorderController.onRecognitionComplete = { recognizedText in
                 handleRecognizedText(recognizedText: recognizedText)
             }
+            print("View appeared, set onRecognitionComplete")
             updateSentences()
         }
         .frame(maxWidth: .infinity, alignment: .bottom)
@@ -185,17 +183,17 @@ struct ReadAloudView: View {
     }
     
     private func handleRecognizedText(recognizedText: String){
-        guard !recognizedText.isEmpty, recognizedText != userAnswer else {
+        print("handle recognizedText: \(recognizedText)")
+        guard !recognizedText.isEmpty else {
             return
         }
-        userAnswer = recognizedText
         let allMatched: Bool
         (displaySampleSentence, allMatched) = compareAnswer(recognized: recognizedText, sample: originalSampleSentence)
         answerResultLabel = allMatched ? 1 : 2
         print("answer all matched: \(allMatched)")
         GameController.shared.handleMatchResult(answerResult: answerResultLabel)
         if answerResultLabel == 1 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 //重置answerResultLabel
                 answerResultLabel = 0
                 nextPractice()
@@ -205,32 +203,49 @@ struct ReadAloudView: View {
     
     // 比较用户的回答和标准答案，生成差异比较结果
     private func compareAnswer(recognized: String, sample: String) -> (attributedString: NSMutableAttributedString, allMatched: Bool) {
-        let attributedString = NSMutableAttributedString(string: sample)
-        let maxLength = max(sample.count, recognized.count)
+        let sampleWords = sample.components(separatedBy: " ")
+        let recognizedWords = recognized.components(separatedBy: " ")
+        let attributedString = NSMutableAttributedString()
         var allMatched = true
+        
+        for (index, sampleWord) in sampleWords.enumerated() {
+            let recognizedWord = index < recognizedWords.count ? recognizedWords[index] : ""
+            
+            // 比较每个单词中的字符
+            for i in 0..<sampleWord.count {
+                let sampleCharIndex = sampleWord.index(sampleWord.startIndex, offsetBy: i)
+                let sampleChar = String(sampleWord[sampleCharIndex])
 
-        for i in 0..<maxLength {
-            let originalIndex = sample.index(sample.startIndex, offsetBy: min(i, sample.count - 1))
-            let recognizedIndex = recognized.index(recognized.startIndex, offsetBy: min(i, recognized.count - 1))
-
-            let originalChar = i < sample.count ? String(sample[originalIndex]) : ""
-            let recognizedChar = i < recognized.count ? String(recognized[recognizedIndex]) : ""
-
-            var color: UIColor = .black // 默认为黑色
-            if i < sample.count && i < recognized.count {
-                if originalChar.lowercased() == recognizedChar.lowercased() {
-                    color = .green
+                var color: UIColor = .black // 默认颜色为黑色
+                
+                if i < recognizedWord.count {
+                    let recognizedCharIndex = recognizedWord.index(recognizedWord.startIndex, offsetBy: i)
+                    let recognizedChar = String(recognizedWord[recognizedCharIndex])
+                    
+                    if sampleChar.lowercased() == recognizedChar.lowercased() {
+                        color = .green // 匹配的字符颜色为绿色
+                    } else {
+                        color = .red // 不匹配的字符颜色为红色
+                        allMatched = false
+                    }
                 } else {
-                    color = .red
+                    // 如果recognized的单词比sample的当前单词短，则剩下的sample字符默认为黑色
                     allMatched = false
                 }
+                
+                let charAttributedString = NSMutableAttributedString(string: sampleChar, attributes: [.foregroundColor: color])
+                attributedString.append(charAttributedString)
             }
             
-            attributedString.addAttribute(.foregroundColor, value: color, range: NSRange(location: i, length: 1))
+            // 在单词之间添加空格（除了最后一个单词）
+            if index < sampleWords.count - 1 {
+                attributedString.append(NSAttributedString(string: " "))
+            }
         }
         
         return (attributedString, allMatched)
     }
+
     
     
     private func updateSentences() {
