@@ -101,7 +101,7 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func startZombieSpawnTimer() {
-        zombieSpawnTimer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: true) { [weak self] _ in
+        zombieSpawnTimer = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: true) { [weak self] _ in
 //            if ContentView.taskStore == nil {
 //                return
 //            }

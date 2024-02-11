@@ -211,31 +211,21 @@ struct ReadAloudView: View {
         for (index, sampleWord) in sampleWords.enumerated() {
             let recognizedWord = index < recognizedWords.count ? recognizedWords[index] : ""
             
-            // 比较每个单词中的字符
-            for i in 0..<sampleWord.count {
-                let sampleCharIndex = sampleWord.index(sampleWord.startIndex, offsetBy: i)
-                let sampleChar = String(sampleWord[sampleCharIndex])
-
-                var color: UIColor = .black // 默认颜色为黑色
-                
-                if i < recognizedWord.count {
-                    let recognizedCharIndex = recognizedWord.index(recognizedWord.startIndex, offsetBy: i)
-                    let recognizedChar = String(recognizedWord[recognizedCharIndex])
-                    
-                    if sampleChar.lowercased() == recognizedChar.lowercased() {
-                        color = .green // 匹配的字符颜色为绿色
-                    } else {
-                        color = .red // 不匹配的字符颜色为红色
-                        allMatched = false
-                    }
-                } else {
-                    // 如果recognized的单词比sample的当前单词短，则剩下的sample字符默认为黑色
-                    allMatched = false
-                }
-                
-                let charAttributedString = NSMutableAttributedString(string: sampleChar, attributes: [.foregroundColor: color])
-                attributedString.append(charAttributedString)
+            var wordAttributedString = NSMutableAttributedString(string: sampleWord)
+            var color: UIColor = .black // 默认颜色为黑色
+            
+            // 检查单词是否匹配，包括长度和内容
+            if sampleWord.lowercased() != recognizedWord.lowercased() || sampleWord.count != recognizedWord.count {
+                color = .red // 单词不匹配或长度不一致，设置为红色
+                allMatched = false
+            } else {
+                color = .green // 单词匹配，设置为绿色
             }
+            
+            wordAttributedString.addAttribute(.foregroundColor, value: color, range: NSRange(location: 0, length: sampleWord.count))
+            
+            // 将处理过的单词添加到最终的attributedString
+            attributedString.append(wordAttributedString)
             
             // 在单词之间添加空格（除了最后一个单词）
             if index < sampleWords.count - 1 {
@@ -245,6 +235,7 @@ struct ReadAloudView: View {
         
         return (attributedString, allMatched)
     }
+
 
     
     
