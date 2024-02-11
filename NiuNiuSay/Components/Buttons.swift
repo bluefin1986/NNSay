@@ -24,27 +24,6 @@ struct RecordButton: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: microPhoneWidth)
-            //                .buttonStyle(PlainButtonStyle()) // 移除按钮默认的背景效果
-            //                .contentShape(Rectangle()) // 确保点击效果应用于整个按钮区域
-            //                .animation(nil, value: isPressing)
-                .simultaneousGesture(
-                    DragGesture(minimumDistance: 0)
-                        .onChanged{ value in
-                            print("start recording, recording status is \(isRecording)")
-                            isPressing = true
-                            if !isRecording {
-                                recorder.startRecording()
-                            }
-                        }
-                        .onEnded{ state in
-                            print("stop recording, recording status is \(isRecording)")
-                            isPressing = false
-                            if isRecording {
-                                recorder.stopRecording()
-                            }
-                            microphoneMaskFill = 0
-                        }
-                )
             // 作为遮罩的 MicMask 图标
             VStack{
                 Image("MicMask")
@@ -72,6 +51,22 @@ struct RecordButton: View {
             }
         }
         .padding(.top, 30)
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    isPressing = true
+                    if !isRecording {
+                        recorder.startRecording()
+                    }
+                }
+                .onEnded { _ in
+                    isPressing = false
+                    if isRecording {
+                        recorder.stopRecording()
+                    }
+                    microphoneMaskFill = 0
+                }
+        )
     }
     
     let animationInterval = 0.05 // 每0.05秒变化一次

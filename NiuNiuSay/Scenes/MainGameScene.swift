@@ -63,8 +63,9 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         self.runBackgroundZoomAnimation(){
             // 调试用，显示物理边框的
-            view.showsPhysics = true
-            
+            if debugFlag {
+                view.showsPhysics = true
+            }
             self.physicsWorld.gravity = CGVector(dx: 0.0, dy: -2.0)
             let ground = SKSpriteNode(color: .clear, size: CGSize(width: self.size.width + 300, height: 2))
             ground.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2 - 100)
