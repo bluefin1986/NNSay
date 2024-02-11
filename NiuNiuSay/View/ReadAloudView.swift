@@ -39,6 +39,10 @@ struct ReadAloudView: View {
                         .onAppear {
                             mainGameScene = MainGameScene(size: CGSize(width: geometry.size.width, height: gameViewHeight),
                                                           taskStore: taskStore)
+                            mainGameScene?.onRestart = {
+                                self.taskStore.reset()
+                                self.updateSentences()
+                            }
                         }
                 } else {
                     SpriteView(scene: mainGameScene!)
@@ -49,20 +53,29 @@ struct ReadAloudView: View {
             .frame(height: gameViewHeight)
             HStack(spacing: 0) {
                 VStack{
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            nextPractice()
-                        }) {
-                            Text("点击我")
-                                .foregroundColor(.white)
-                                .frame(width: 100, alignment: .trailing)
-                                .padding(.trailing, 30)
+                    if debugFlag {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+//                                nextPractice()
+                                DispatchQueue.main.async {
+                                    var debugSentence = taskStore.getPractices()[taskStore.currentPracticeIndex].sentence
+//                                    debugSentence = randomizeCharacters(in: debugSentence)
+                                    handleRecognizedText(recognizedText:debugSentence)
+                                }
+                            }) {
+                                Text("点击我")
+                                    .foregroundColor(.white)
+                                    .frame(width: 100, alignment: .trailing)
+                                    .padding(.trailing, 30)
+                            }
                         }
+                    } else {
+                        Spacer()
                     }
                     AttributedText(attributedString: displaySampleSentence,
-                                   font: UIFont(name: "Arial", size: 40)!,
-                                   color: .white)
+                                   font: UIFont(name: "Arial", size: 40)!)
+//                                   color: .white)
                     .frame(maxWidth: .infinity, maxHeight: .infinity) // 限制最大宽高
                     .fixedSize(horizontal: true, vertical: true) // 垂直方向上内容自适应
                     .frame(height:95, alignment: .leading)
@@ -110,56 +123,47 @@ struct ReadAloudView: View {
                 .background(
                     Image("RecorderBackground")
                         .resizable()
-//                        .scaledToFill()
                         .frame(width: 294, height: 282)
                 )
                 
             }
             
-////                    // 根据 answerResultLabel 显示不同的标签
-////                    if answerResultLabel == 1 {
-////                        Text("Good")
-////                            .foregroundColor(.green)
-////                            .onAppear {
-////                                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-////                                    //重置answerResultLabel
-////                                    answerResultLabel = 0
-////                                    nextSentence()
-////                                }
-////                            }
-////                    } else if answerResultLabel == 2 {
-////                        Text("Wrong")
-////                            .foregroundColor(.red)
-////                            .onAppear {
-////                                // 用户重新说
-////                            }
-////                    }
-                   
-////                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .frame(width: 400)
+            // 根据 answerResultLabel 显示不同的标签
+
              
-////
-////            TextField("说出英文", text: $userAnswer)
-////                .padding()
-////                .onAppear {
-////                    recorderController.onRecognitionComplete = { recognizedText in
-////                        guard !recognizedText.isEmpty, recognizedText != userAnswer else {
-////                            return
-////                        }
-////                        userAnswer = recognizedText
-////                        let allMatched: Bool
-////                        (displaySampleSentence, allMatched) = compareAnswer(recognized: recognizedText, sample: originalSampleSentence)
-////                        answerResultLabel = allMatched ? 1 : 2
-////                        GameController.shared.handleMatchResult(answerResult: answerResultLabel)
-////                    }
-////                }
             
         }
         .padding(0)
         .onAppear {
+            recorderController.onRecognitionComplete = { recognizedText in
+                handleRecognizedText(recognizedText: recognizedText)
+            }
             updateSentences()
         }
         .frame(maxWidth: .infinity, alignment: .bottom)
+    }
+    
+    private func randomizeCharacters(in sentence: String) -> String {
+        var chars = Array(sentence) // 将字符串转换为字符数组以便进行修改
+        let sentenceLength = chars.count
+        let charsToChange = min(3, sentenceLength) // 最多更改3个字符，或者句子的长度，取较小值
+
+        var indexesChanged: Set<Int> = []
+
+        while indexesChanged.count < charsToChange {
+            let randomIndex = Int.random(in: 0..<sentenceLength)
+            if let char = chars[randomIndex].asciiValue {
+                var nextChar = char + 1
+                // 确保替换后的字符是有效的ASCII字符，这里简单处理，避免超过'z'
+                if nextChar > 122 { // 'z'的ASCII值为122
+                    nextChar = char // 如果超过了，就不改变它，这一步根据需要调整
+                }
+                chars[randomIndex] = Character(UnicodeScalar(nextChar))
+                indexesChanged.insert(randomIndex)
+            }
+        }
+
+        return String(chars)
     }
     
     /**
@@ -176,6 +180,25 @@ struct ReadAloudView: View {
                 taskStore.currentPracticeIndex += 1
                 updateSentences()
                 mainGameScene?.addAmmoToPeashooter()
+            }
+        }
+    }
+    
+    private func handleRecognizedText(recognizedText: String){
+        guard !recognizedText.isEmpty, recognizedText != userAnswer else {
+            return
+        }
+        userAnswer = recognizedText
+        let allMatched: Bool
+        (displaySampleSentence, allMatched) = compareAnswer(recognized: recognizedText, sample: originalSampleSentence)
+        answerResultLabel = allMatched ? 1 : 2
+        print("answer all matched: \(allMatched)")
+        GameController.shared.handleMatchResult(answerResult: answerResultLabel)
+        if answerResultLabel == 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                //重置answerResultLabel
+                answerResultLabel = 0
+                nextPractice()
             }
         }
     }
@@ -215,16 +238,10 @@ struct ReadAloudView: View {
             let practice = taskStore.getPractices()[taskStore.currentPracticeIndex]
             originalSampleSentence = practice.sentence
             displaySampleSentence = NSMutableAttributedString(string: originalSampleSentence)
+            let fullRange = NSRange(location: 0, length: displaySampleSentence.length)
+            displaySampleSentence.addAttribute(.foregroundColor, value: UIColor.white, range: fullRange)
             displayTranslation = practice.translation
         }
     }
 
-    private func nextSentence() {
-        if taskStore.currentPracticeIndex < taskStore.getPracticesCount() - 1 {
-            DispatchQueue.main.async {
-                taskStore.currentPracticeIndex += 1
-            }
-            updateSentences()
-        }
-    }
 }

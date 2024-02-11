@@ -55,3 +55,6 @@ public extension UIColor {
 
 let audioFilename = FileManager.default.temporaryDirectory.appendingPathComponent("recordedAudio.caf")
 let sampleAudioFilename = FileManager.default.temporaryDirectory.appendingPathComponent("sample.caf")
+
+// 调试标识，为true的时候， 显示物理体边框等
+let debugFlag = true

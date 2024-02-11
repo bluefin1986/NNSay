@@ -26,14 +26,14 @@ struct ReadAloudIntroView: View {
                 // 背景图片
                 Image("Almanac_ZombieBack") // 替换为你的背景图片名称
                     .resizable()
-                    .scaledToFill()
+                    .scaledToFit()
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     Text("大声读出来吧！")
                         .font(Font.custom("gongfanwanshihei", size: 24))
                         .foregroundColor(.white) // 设置文字颜色为白色
                         .frame(height: 50)
-                        .padding(.top, 30)
+                        .padding(.top, 50)
                     Spacer()
                     HStack {
                         Spacer ()
@@ -45,7 +45,7 @@ struct ReadAloudIntroView: View {
                                            font: UIFont(name: "gongfanwanshihei", size: 28)!,
                                            color:UIColor.init(colorHex: 0x171A1F),
                                            fixedWidth: infoBoxWidth)
-                            .frame(width: infoBoxWidth, height: 300,  alignment: .trailing)
+                            .frame(width: infoBoxWidth, height: 250,  alignment: .trailing)
                             .padding(.trailing, 100)
                             // 开始按钮
                             Button(action: {

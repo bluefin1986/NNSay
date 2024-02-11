@@ -127,6 +127,12 @@ class TaskStore: ObservableObject {
         return self.practices.count
     }
     
+    public func reset(){
+        self.correctCount = 0
+        self.award = 0
+        self.currentPracticeIndex = 0
+    }
+    
 }
 
 struct Practice: Codable{

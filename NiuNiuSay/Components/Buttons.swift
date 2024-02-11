@@ -14,7 +14,7 @@ struct RecordButton: View {
     @Binding var isRecording: Bool
     @ObservedObject var recorder: RecorderController
     @State private var isPressing = false
-    @State private var microphoneMaskFill: CGFloat = 0.5
+    @State private var microphoneMaskFill: CGFloat = 0
     
     private let microPhoneWidth = CGFloat(194)
     
@@ -24,24 +24,27 @@ struct RecordButton: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: microPhoneWidth)
-//                .buttonStyle(PlainButtonStyle()) // 移除按钮默认的背景效果
-//                .contentShape(Rectangle()) // 确保点击效果应用于整个按钮区域
-//                .animation(nil, value: isPressing)
+            //                .buttonStyle(PlainButtonStyle()) // 移除按钮默认的背景效果
+            //                .contentShape(Rectangle()) // 确保点击效果应用于整个按钮区域
+            //                .animation(nil, value: isPressing)
                 .simultaneousGesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged{ value in
+                            print("start recording, recording status is \(isRecording)")
                             isPressing = true
                             if !isRecording {
                                 recorder.startRecording()
                             }
                         }
                         .onEnded{ state in
+                            print("stop recording, recording status is \(isRecording)")
                             isPressing = false
                             if isRecording {
                                 recorder.stopRecording()
                             }
+                            microphoneMaskFill = 0
                         }
-            )
+                )
             // 作为遮罩的 MicMask 图标
             VStack{
                 Image("MicMask")
@@ -53,14 +56,17 @@ struct RecordButton: View {
                         Rectangle()
                             .fill(Color.white) // 遮罩颜色（不重要，因为它是遮罩）
                             .frame(width: 100, height: 100 * microphoneMaskFill)
-                            .offset(y: 66 - (100 * microphoneMaskFill) / 2) // 调整遮罩的位置
+                            .offset(y: 50 - (100 * microphoneMaskFill) / 3) // 调整遮罩的位置
                     )
                     .onDisappear {
                         isAnimating = false // 当视图消失时停止动画
                     }
                     .onAppear {
                         isAnimating = true
-                        incrementMicrophoneFill()
+                    }
+                    .onChange(of: recorder.audioMeter) { _,newMeterValue in
+                        // 根据音量调整micmask填充
+                        updateMicrophoneMaskFill(from: newMeterValue)
                     }
                 Spacer()
             }
@@ -68,42 +74,26 @@ struct RecordButton: View {
         .padding(.top, 30)
     }
     
-    let animationStep: CGFloat = 0.1 // 每步变化的量
-    let animationInterval = 0.1 // 每0.5秒变化一次
+    let animationInterval = 0.05 // 每0.05秒变化一次
     @State private var isAnimating = true
-
-    private func incrementMicrophoneFill() {
-        guard isAnimating else { return } // 检查是否应该继续动画
-        let newValue = microphoneMaskFill + animationStep > 1 ? 0 : microphoneMaskFill + animationStep
-        withAnimation(.linear(duration: animationInterval)) {
-            microphoneMaskFill = newValue
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + animationInterval) {
-            incrementMicrophoneFill()
+    
+    private func updateMicrophoneMaskFill(from meterValue: Float) {
+        // 将分贝值转换为0到1之间的值
+        let normalizedMeterValue = min(max((meterValue + 60) / 60, 0), 1) // 假设最小分贝值为-60dB
+        withAnimation(.linear(duration: 0.1)) {
+            microphoneMaskFill = CGFloat(normalizedMeterValue)
         }
     }
+}
 //    private func startUpdatingMicrophoneFill() {
 //        // 通过定时器或其他方式定期更新 microphoneFill
 //        // 这里你需要获取到音量并将其映射到 0 到 1 的范围内
 //        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
 //            // 这里是假设的音量获取方法
-//    
+//
 //            self.microphoneFill = min(max(0, volume / maxVolume), 1) // 确保值在 0 到 1 之间
 //        }
 //    }
-   
-    private func calculateMeterCircle() -> CGFloat{
-        let minScale: CGFloat = 0.5
-        let maxScale: CGFloat = 1.2
-        let adjust = 0.5
-        
-        let normalizedAudioMeter = CGFloat((100 + recorder.audioMeter) / 100)
-        let result = min(max(normalizedAudioMeter, minScale), maxScale)
-        
-//        print("recorder.audioMeter: \(recorder.audioMeter) normalized to \(normalizedAudioMeter), result is \(result)")
-        return result + adjust
-    }
-}
 
 
 
@@ -127,6 +117,7 @@ struct PlayButton: View {
         }
     }
 }
+    
 
 
 struct PlaySampleButton: View {

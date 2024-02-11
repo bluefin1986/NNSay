@@ -26,7 +26,7 @@ class SampleSpeakController : NSObject, ObservableObject, AVAudioPlayerDelegate 
             return
         }
         
-        guard let url = URL(string: "http://192.168.50.82:8080/tts") else { return }
+        guard let url = URL(string: "http://192.168.53.247:8080/tts") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
 

@@ -51,6 +51,7 @@
 		75C492CA2B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 75C492C92B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf */; };
 		75C492CC2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492CB2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift */; };
 		75C492CE2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C492CD2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift */; };
+		75C492D02B785E5900DA76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75C492CF2B785E5900DA76C0 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -119,6 +120,7 @@
 		75C492C92B72856800DA76C0 /* SF-Pro-Rounded-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Rounded-Bold.otf"; sourceTree = "<group>"; };
 		75C492CB2B73C5D000DA76C0 /* EnglishToChineseIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnglishToChineseIntroView.swift; sourceTree = "<group>"; };
 		75C492CD2B73C60F00DA76C0 /* ChineseToEnglishIntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChineseToEnglishIntroView.swift; sourceTree = "<group>"; };
+		75C492CF2B785E5900DA76C0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,6 +185,7 @@
 		75BC1D8C2B5E68E200F629C6 = {
 			isa = PBXGroup;
 			children = (
+				75C492CF2B785E5900DA76C0 /* LaunchScreen.storyboard */,
 				75BC1D972B5E68E200F629C6 /* NiuNiuSay */,
 				75BC1DA82B5E68E300F629C6 /* NiuNiuSayTests */,
 				75BC1DB22B5E68E300F629C6 /* NiuNiuSayUITests */,
@@ -436,6 +439,7 @@
 				75C492962B6A2B5000DA76C0 /* pea-shooter.gif in Resources */,
 				75C492882B695A2800DA76C0 /* MainGameScene.sks in Resources */,
 				75C492C52B70D87300DA76C0 /* Sun.gif in Resources */,
+				75C492D02B785E5900DA76C0 /* LaunchScreen.storyboard in Resources */,
 				75C492982B6A2D6F00DA76C0 /* Zombie.gif in Resources */,
 				75BC1D9D2B5E68E300F629C6 /* Assets.xcassets in Resources */,
 			);
@@ -662,9 +666,9 @@
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "让我来帮你识别语音输入的内容";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -672,9 +676,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.nnsay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -696,9 +703,9 @@
 				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "让我来帮你识别语音输入的内容";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -706,9 +713,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bluefin.nnsay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

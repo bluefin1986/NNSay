@@ -75,6 +75,7 @@ class RecorderController: ObservableObject {
     // 开始录音
     public func startRecording() {
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
+            print("SFSpeechRecognizer authStatus: \(authStatus)")
             if authStatus != .authorized {
                return
             }
@@ -93,16 +94,18 @@ class RecorderController: ObservableObject {
             audioRecorder?.stop()
             stopMeterUpdateTimer()
             isRecording = false
-            //开始识别转换文本
-            speechRecognition.recognizeSpeech(from: audioFilename) { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case .success(let recognizedText):
-                    self.recognizedText = recognizedText
-                    print("Recognition success: \(recognizedText)")
-                    onRecognitionComplete?(recognizedText)
-                case .failure(let error):
-                    print("Recognition failure: \(error)")
+            DispatchQueue.main.async {
+                //开始识别转换文本
+                self.speechRecognition.recognizeSpeech(from: audioFilename) { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let recognizedText):
+                        self.recognizedText = recognizedText
+                        print("Recognition success: \(recognizedText)")
+                        onRecognitionComplete?(recognizedText)
+                    case .failure(let error):
+                        print("Recognition failure: \(error)")
+                    }
                 }
             }
         }

@@ -43,6 +43,8 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
     
     private var firstRun = true
     
+    public var onRestart: (() -> Void)?
+    
     func setTaskStore(taskStore: TaskStore){
         self.taskStore = taskStore
     }
@@ -270,13 +272,11 @@ class MainGameScene: SKScene, SKPhysicsContactDelegate {
             runBackgroundZoomAnimation {
                 self.setupPeashooter()
                 self.startZombieSpawnTimer()
-//                self.setupZombie()
-//                self.zombie!.runZombieWalkAnimation(walkSteps: 50)
             }
         } else {
-//            self.zombie!.runZombieWalkAnimation(walkSteps: 50)
             self.startZombieSpawnTimer()
         }
+        self.onRestart?()
     }
     
     public func addAmmoToPeashooter(){
